@@ -3,6 +3,7 @@ import BottomBar from "@/components/shared/bottom-bar";
 import LeftBar from "@/components/shared/left-bar";
 import TopBar from "@/components/shared/top-bar";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import RoleProvider from "../context/tab-context";
@@ -46,6 +47,7 @@ export default function RootLayout({
           </section>
           <BottomBar />
         </main>
+        <Analytics />
       </body>
     </html>
   );
