@@ -39,7 +39,7 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
       <Table>
         <TableCaption>Số lượng bài tập: {ass.length}</TableCaption>
         <TableHeader>
-          <TableRow>
+          <TableRow className="font-bold">
             <TableHead>Tên bài tập</TableHead>
             <TableHead>Hạn nôp bài</TableHead>
             <TableHead>Thời gian cập nhật gần nhất</TableHead>
@@ -50,9 +50,12 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
             const ass = assignment;
             const isDue = isDueDate(ass.dueDate);
             return (
-              <TableRow key={index} className={`${isDue ? "row-due" : ""}`}>
+              <TableRow
+                key={index}
+                className={`${isDue ? "row-due" : "font-bold"}`}
+              >
                 <TableCell>
-                  <Link href={`/assign/${ass.id}`}>
+                  <Link href={`/assign/${ass.id}`} className="hover:underline">
                     {formatName(ass.name, 20)}
                   </Link>
                 </TableCell>

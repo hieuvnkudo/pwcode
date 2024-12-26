@@ -14,7 +14,7 @@ import {
 } from "@/db/schema";
 import { CodeSelect } from "@/lib/types";
 import {
-  SandpackCodeViewer,
+  SandpackCodeEditor,
   SandpackLayout,
   SandpackPreview,
 } from "@codesandbox/sandpack-react";
@@ -79,7 +79,13 @@ const page = async ({ params }: Props) => {
               {studentCode && (
                 <SPCommon code={studentCode}>
                   <SandpackLayout>
-                    <SandpackCodeViewer showTabs />
+                    <SandpackCodeEditor
+                      showTabs
+                      readOnly={true}
+                      style={{
+                        height: "calc(100vh - 8rem)",
+                      }}
+                    />
                   </SandpackLayout>
                 </SPCommon>
               )}
@@ -96,7 +102,13 @@ const page = async ({ params }: Props) => {
                   }
                 >
                   <SandpackLayout>
-                    <SandpackCodeViewer showTabs />
+                    <SandpackCodeEditor
+                      showTabs
+                      readOnly={true}
+                      style={{
+                        height: "calc(100vh - 8rem)",
+                      }}
+                    />
                   </SandpackLayout>
                 </SPCommon>
               ) : (
@@ -118,7 +130,11 @@ const page = async ({ params }: Props) => {
               {studentCode && (
                 <SPCommon code={studentCode}>
                   <SandpackLayout>
-                    <SandpackPreview />
+                    <SandpackPreview
+                      style={{
+                        height: "calc(100vh - 8rem)",
+                      }}
+                    />
                   </SandpackLayout>
                 </SPCommon>
               )}
@@ -135,7 +151,11 @@ const page = async ({ params }: Props) => {
                   }
                 >
                   <SandpackLayout>
-                    <SandpackPreview />
+                    <SandpackPreview
+                      style={{
+                        height: "calc(100vh - 8rem)",
+                      }}
+                    />
                   </SandpackLayout>
                 </SPCommon>
               ) : (

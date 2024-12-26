@@ -19,7 +19,6 @@ import { CodeSelect } from "@/lib/types";
 import { isDueDate } from "@/lib/utils";
 import {
   SandpackCodeEditor,
-  SandpackCodeViewer,
   SandpackLayout,
   SandpackPreview,
 } from "@codesandbox/sandpack-react";
@@ -40,7 +39,6 @@ const page = async ({ params }: Props) => {
     .innerJoin(classTable, eq(assignmentTable.classId, classTable.id))
     .leftJoin(codeTable, eq(assignmentTable.originalCodeId, codeTable.id))
     .where(eq(assignmentTable.id, id));
-  console.log(assigns);
   if (assigns.length === 0) return <h1>Không tìm thấy bài tập</h1>;
   const submit = await db
     .select()
@@ -131,7 +129,8 @@ const page = async ({ params }: Props) => {
                       }
                     >
                       <SandpackLayout>
-                        <SandpackCodeViewer
+                        <SandpackCodeEditor
+                          readOnly={true}
                           showTabs
                           style={{
                             height: "calc(100vh - 8rem)",

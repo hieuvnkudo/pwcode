@@ -1,10 +1,10 @@
-import { auth } from "@/auth";
+import { auth, signIn } from "@/auth";
 import CreateClass from "@/components/classes/create-class";
 import CreateStudent from "@/components/classes/create-student";
 import ListClass from "@/components/classes/list-class";
 import ListClassRoleStudent from "@/components/classes/list-class-student-role";
 import CustomTabs from "@/components/custom/custom-tabs";
-import GoogleButton from "@/components/shared/google-button";
+import { Button } from "@/components/ui/button";
 import { TabsContent } from "@radix-ui/react-tabs";
 
 const page = async () => {
@@ -12,7 +12,16 @@ const page = async () => {
   if (!session)
     return (
       <div className="flex items-center justify-center h-screen">
-        <GoogleButton />;
+        <form
+          action={async () => {
+            "use server";
+            await signIn("google");
+          }}
+        >
+          <Button type="submit" variant={"outline"}>
+            Đăng nhập với Google
+          </Button>
+        </form>
       </div>
     );
   const tabs = [

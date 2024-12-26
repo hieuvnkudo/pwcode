@@ -72,7 +72,8 @@ const page = async (props: Props) => {
         and(eq(studentTable.userEmail, email), eq(studentTable.classId, query))
       )
       .orderBy(desc(studentTable.createdAt));
-    if (student.length === 0) return <h1>Bạn chưa là học sinh của lớp này</h1>;
+    if (student.length === 0)
+      return <h1 className="my-4">Bạn chưa là học sinh của lớp này</h1>;
     submits = await db
       .select()
       .from(submitTable)
@@ -98,7 +99,7 @@ const page = async (props: Props) => {
             </TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead>Tên bài tập</TableHead>
+                <TableHead className="font-bold">Tên bài tập</TableHead>
                 <TableHead>Đã chấm?</TableHead>
                 <TableHead>Phản hồi</TableHead>
                 <TableHead>Điểm</TableHead>
@@ -110,7 +111,7 @@ const page = async (props: Props) => {
                 const assignment_table = submit.assignment_table;
                 return (
                   <TableRow key={submit.submit_table.id}>
-                    <TableCell>
+                    <TableCell className="font-bold">
                       <Link
                         href={`/assign/${assignment_table.id}`}
                         className="hover:underline"
@@ -131,7 +132,9 @@ const page = async (props: Props) => {
             </TableBody>
           </Table>
         ) : (
-          <div>Chưa có bài nộp nào trong lớp này</div>
+          <div className="py-4 text-center">
+            Bạn chưa nộp bài tập nào trong lớp này
+          </div>
         )}
       </div>
     </div>

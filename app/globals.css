@@ -76,6 +76,6 @@ body {
     @apply p-2 bg-gray-400 bg-opacity-30 text-black rounded-md;
   }
   .row-due {
-    @apply opacity-50;
+    @apply opacity-80;
   }
 }

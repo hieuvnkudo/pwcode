@@ -67,7 +67,7 @@ const ReCodeButton = ({ code, project, isRecode }: Props) => {
         </Dialog>
       ) : (
         <Button asChild variant={"outline"}>
-          <Link href={`/project/${project.id}`}>Viết mã</Link>
+          <Link href={`/projects/${project.id}`}>Viết mã</Link>
         </Button>
       )}
     </>

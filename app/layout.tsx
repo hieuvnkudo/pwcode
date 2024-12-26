@@ -37,15 +37,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen`}
       >
+        <Toaster />
         <LeftBar />
         <main className="flex flex-col flex-grow">
           <TopBar />
-          <section className="flex flex-col flex-grow overflow-auto bg-slate-300 rounded-md">
+          <section className="flex flex-col flex-grow overflow-auto bg-zinc-200">
             <RoleProvider>{children}</RoleProvider>
           </section>
           <BottomBar />
         </main>
-        <Toaster />
       </body>
     </html>
   );

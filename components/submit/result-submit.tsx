@@ -64,7 +64,7 @@ const ResultSubmit = ({ submit, student }: Props) => {
     }
   }
   return (
-    <div className="w-1/2 mx-auto">
+    <div className="w-4/5 mx-auto">
       <h3>Chủ nhân: {student.name}</h3>
       <h4>Email: {student.userEmail}</h4>
       <Form {...form}>

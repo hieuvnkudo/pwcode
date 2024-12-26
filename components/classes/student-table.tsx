@@ -41,7 +41,7 @@ const StudentTable = async ({ classId }: Props) => {
       </TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Tên</TableHead>
+          <TableHead className="font-bold">Tên</TableHead>
           <TableHead>Tham gia lúc</TableHead>
           {isTeacher && <TableHead>Bài tập đã làm</TableHead>}
         </TableRow>
@@ -50,7 +50,9 @@ const StudentTable = async ({ classId }: Props) => {
         {students.map((student) => {
           return (
             <TableRow key={student.id}>
-              <TableCell>{formatName(student.name, 20)}</TableCell>
+              <TableCell className="font-bold">
+                {formatName(student.name, 20)}
+              </TableCell>
               <TableCell>{formatTime(student.createdAt)}</TableCell>
               {isTeacher && (
                 <TableCell>
