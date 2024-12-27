@@ -1,4 +1,4 @@
-import { geminiModel } from "@/lib/ai/models";
+import { mistralModel } from "@/lib/ai/models";
 import {
   systemReviewCodePrompt,
   userReviewCodePrompt,
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   const context = await req.json();
 
   const result = await generateObject({
-    model: geminiModel,
+    model: mistralModel,
     schema: reviewSchema,
     system: systemReviewCodePrompt,
     prompt: userReviewCodePrompt({

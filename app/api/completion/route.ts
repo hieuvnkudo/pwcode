@@ -1,5 +1,5 @@
 import { systemPromptForCompletion } from "@/lib/prompts/completion";
-import { google } from "@ai-sdk/google";
+import { mistral } from "@ai-sdk/mistral";
 import { streamText } from "ai";
 
 export const maxDuration = 30;
@@ -10,9 +10,7 @@ export async function POST(req: Request) {
   const { prompt }: { prompt: string } = await req.json();
 
   const result = streamText({
-    model: google("gemini-2.0-flash-exp", {
-      useSearchGrounding: true,
-    }),
+    model: mistral("mistral-large-latest"),
     system: systemPromptForCompletion,
     prompt: prompt,
   });
