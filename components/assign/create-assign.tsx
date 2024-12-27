@@ -18,11 +18,7 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { createAssignAction } from "@/lib/action/assign";
 import { cn } from "@/lib/utils";
-import {
-  SandpackCodeEditor,
-  SandpackLayout,
-  SandpackPreview,
-} from "@codesandbox/sandpack-react";
+import { SandpackLayout, SandpackPreview } from "@codesandbox/sandpack-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -30,6 +26,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { MonacoEditor } from "../monaco/MonacoEditor";
 import SPCommon from "../sandpack/sp-common";
 import RichTextEditor from "../tiptap/rich-text-editor";
 import { Input } from "../ui/input";
@@ -282,17 +279,8 @@ const CreateAssign = ({ classId }: Props) => {
               }}
             />
             <SandpackLayout>
-              <SandpackCodeEditor
-                showTabs={true}
-                style={{
-                  height: "calc(100vh - 8rem)",
-                }}
-              />
-              <SandpackPreview
-                style={{
-                  height: "calc(100vh - 8rem)",
-                }}
-              />
+              <MonacoEditor />
+              <SandpackPreview style={{ height: "100vh" }} />
             </SandpackLayout>
           </SPCommon>
         </>

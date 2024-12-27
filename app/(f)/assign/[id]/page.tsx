@@ -5,6 +5,7 @@ import InfoAssign from "@/components/assign/info-assign";
 import SPAssign from "@/components/assign/sp-assign";
 import SubmitTable from "@/components/classes/submit-table";
 import CustomTabs from "@/components/custom/custom-tabs";
+import { MonacoEditor } from "@/components/monaco/MonacoEditor";
 import SPCommon from "@/components/sandpack/sp-common";
 import { TabsContent } from "@/components/ui/tabs";
 import { db } from "@/db/drizzle";
@@ -99,7 +100,7 @@ const page = async ({ params }: Props) => {
                         <SandpackLayout>
                           <SandpackPreview
                             style={{
-                              height: "calc(100vh - 8rem)",
+                              height: "100vh",
                             }}
                           />
                         </SandpackLayout>
@@ -129,18 +130,8 @@ const page = async ({ params }: Props) => {
                       }
                     >
                       <SandpackLayout>
-                        <SandpackCodeEditor
-                          readOnly={true}
-                          showTabs
-                          style={{
-                            height: "calc(100vh - 8rem)",
-                          }}
-                        />
-                        <SandpackPreview
-                          style={{
-                            height: "calc(100vh - 8rem)",
-                          }}
-                        />
+                        <SandpackCodeEditor style={{ height: "100vh" }} />
+                        <SandpackPreview style={{ height: "100vh" }} />
                       </SandpackLayout>
                     </SPCommon>
                   )}
@@ -154,17 +145,8 @@ const page = async ({ params }: Props) => {
                   <SPCommon code={originalCode}>
                     <CreateCodeOriginal assignId={id} />
                     <SandpackLayout>
-                      <SandpackCodeEditor
-                        showTabs={true}
-                        style={{
-                          height: "calc(100vh - 8rem)",
-                        }}
-                      />
-                      <SandpackPreview
-                        style={{
-                          height: "calc(100vh - 8rem)",
-                        }}
-                      />
+                      <MonacoEditor />
+                      <SandpackPreview style={{ height: "100vh" }} />
                     </SandpackLayout>
                   </SPCommon>
                 ) : (
@@ -173,17 +155,8 @@ const page = async ({ params }: Props) => {
                     <SPCommon code={{}}>
                       <CreateCodeOriginal assignId={id} />
                       <SandpackLayout>
-                        <SandpackCodeEditor
-                          showTabs={true}
-                          style={{
-                            height: "calc(100vh - 8rem)",
-                          }}
-                        />
-                        <SandpackPreview
-                          style={{
-                            height: "calc(100vh - 8rem)",
-                          }}
-                        />
+                        <MonacoEditor />
+                        <SandpackPreview style={{ height: "100vh" }} />
                       </SandpackLayout>
                     </SPCommon>
                   </div>
