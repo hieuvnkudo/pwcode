@@ -1,55 +1,32 @@
 import { fileNames } from "@/contants/sandpack";
-import { CodeSelect } from "../types";
 
-export const systemPromptForReviewCode = `
-# Bạn là chuyên gia lập trình web cơ bản với HTML, CSS và Javascript
-# Nhiệm vụ của bạn là: 
+export const systemReviewCodePrompt = `
+Bạn là chuyên gia lập trình web có khả năng hướng dẫn người dùng viết mã một cách dễ hiểu cho người mới bắt đầu.
 
-## Đọc dự án do người dùng cung cấp:
-  - Lưu ý cấu trúc tổng quan, tính năng chính của dự án
-## Tiến hành đánh giá dự án dựa trên các tiêu chí sau:
-  - Lỗi cú pháp, chính tả của code
-  - Để xuất giải pháp cải thiện dự án cho người dùng
+Nhiệm vụ của bạn là: 
+Nhận vào mã nguồn gồm 3 file ${fileNames.html}, ${fileNames.css}, ${fileNames.javascript}.
+Hãy xem xét mã nguỗn và đánh giá mã nguồn của từng file bằng cách viết comment vào từng file trên những dòng code liên quan đến đánh giá.
 
-# Định dạng đầu ra: Định dạng markdown
+Lưu ý: Nhận biết loại ngôn ngữ lập trình bằng cách xem phần mở rộng của file. Ví dụ: file.html, file.css, file.js. Comment theo cú pháp comment của từng loại ngôn ngữ lập trình.
+Ví dụ: 
+- Trong file HTML: <!-- Comment -->
+- Trong file CSS: /* Comment */
+- Trong file JavaScript: // Comment
 
-# Ngôn ngữ dùng để trả lời: Tiếng Việt
+Ngôn ngữ dùng để viết comment: Tiếng Việt.
+
+Luôn thêm comment vào đầu file để mô tả nội dung file.
+Luôn thêm thời gian đánh giá vào cuối file.
 `.trim();
 
-const formatCodeForReview = (code: CodeSelect) => {
-  return `
-  File HTML (${fileNames.html.split("/")[1]}): "${code.html}"
-  File CSS  (${fileNames.css.split("/")[1]}): "${code.css}"
-  File Javascript: (${fileNames.javascript.split("/")[1]}): "${code.javascript}"
-  `.trim();
-};
-
-export const userPromptForReviewCode = (
-  studentCode: CodeSelect,
-  originalCode: CodeSelect
-) => {
-  return `
-  Hãy giúp tôi so sánh đánh giá mã của học sinh so với mã của giáo viên:
-    - Mã học sinh:
-        ${formatCodeForReview(studentCode)}
-    - Mã giáo viên: 
-        ${formatCodeForReview(originalCode)}
-  So sánh đánh giá trên các phương diện:
-    - Lỗi cú pháp, chính tả của mã học sinh
-    - Cấu trúc so với mã giáo viên
-    - Điểm khác biệt lớn nhất so với code giáo viên
-    - Mức độ tương đồng: (20% - 100%)
-  `.trim();
-};
-
-export const reviewCodePrompt = (code: {
+export const userReviewCodePrompt = (code: {
   html: string;
   css: string;
   javascript: string;
 }) =>
   `
-Hãy giúp tôi đánh giá tôi đang viết
-  - File HTML: "${code.html}"
-  - File CSS: "${code.css}"
-  - File Javascript: "${code.javascript}"
+Đánh giá mã nguồn bằng cách comment vào từng file, nội dung các file cần đánh giá như sau:
+${fileNames.html}: ${code.html}
+${fileNames.css}: ${code.css}
+${fileNames.javascript}: ${code.javascript}
 `.trim();

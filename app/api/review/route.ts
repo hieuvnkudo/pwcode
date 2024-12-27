@@ -1,18 +1,28 @@
-import { mistralModel } from "@/lib/ai/models";
+import { geminiModel } from "@/lib/ai/models";
+import {
+  systemReviewCodePrompt,
+  userReviewCodePrompt,
+} from "@/lib/prompts/review-code";
 import { reviewSchema } from "@/lib/schemas/review-code";
-import { streamObject } from "ai";
+import { generateObject } from "ai";
 
 export const maxDuration = 30;
+
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   const context = await req.json();
 
-  const result = streamObject({
-    model: mistralModel,
+  const result = await generateObject({
+    model: geminiModel,
     schema: reviewSchema,
-    prompt:
-      `Generate 3 notifications for a messages app in this context:` + context,
+    system: systemReviewCodePrompt,
+    prompt: userReviewCodePrompt({
+      html: context.html,
+      css: context.css,
+      javascript: context.javascript,
+    }),
   });
 
-  return result.toTextStreamResponse();
+  return result.toJsonResponse();
 }

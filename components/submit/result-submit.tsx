@@ -23,8 +23,11 @@ import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
-  point: z.number().min(0).max(10),
-  feedback: z.string().min(2).max(1000),
+  point: z
+    .number()
+    .min(0, "Điểm không được nhỏ hơn 0")
+    .max(10, "Điểm không được lớn hơn 10"),
+  feedback: z.string().min(2, "Ít nhất 2 kí tự").max(1000),
 });
 
 type Props = {
@@ -38,16 +41,22 @@ const ResultSubmit = ({ submit, student }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      point: 0,
-      feedback: "",
+      point: submit.point,
+      feedback: submit.feedback || "",
+    },
+    values: {
+      point: submit.point,
+      feedback: submit.feedback || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    console.log(values);
     const { error } = await updateSubmitAction(submit.id, {
       point: values.point,
       feedback: values.feedback,
+      rated: true,
     });
     setIsLoading(false);
     if (error) {
@@ -65,8 +74,9 @@ const ResultSubmit = ({ submit, student }: Props) => {
   }
   return (
     <div className="w-4/5 mx-auto">
-      <h3>Chủ nhân: {student.name}</h3>
-      <h4>Email: {student.userEmail}</h4>
+      <h1 className="text-lg">Học sinh: {student.name}</h1>
+      <h2>Email: {student.userEmail}</h2>
+      <h3>Trạng thái bài nộp: {submit.rated ? "Đã chấm" : "Chưa chấm"}</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -76,7 +86,12 @@ const ResultSubmit = ({ submit, student }: Props) => {
               <FormItem>
                 <FormLabel>Điểm</FormLabel>
                 <FormControl>
-                  <Input placeholder="10" type="number" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="0"
+                    value={field.value}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
                 </FormControl>
                 <FormDescription>
                   Điểm của bài làm. Điểm từ 0 đến 10.
@@ -94,7 +109,9 @@ const ResultSubmit = ({ submit, student }: Props) => {
                 <FormControl>
                   <Textarea placeholder="Good!!!!" {...field} />
                 </FormControl>
-                <FormDescription>Đánh giá của giáo viên.</FormDescription>
+                <FormDescription>
+                  Đánh giá của người tạo bài tập
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

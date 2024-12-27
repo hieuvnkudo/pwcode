@@ -31,7 +31,7 @@ const HomeListProject = async () => {
         return (
           <Card key={pro.id}>
             <CardHeader>
-              <CardTitle className="text-2xl">{pro.name}</CardTitle>
+              <CardTitle className="text-base">{pro.name}</CardTitle>
               <CardDescription>{pro.sharedContent}</CardDescription>
             </CardHeader>
             <CardContent>

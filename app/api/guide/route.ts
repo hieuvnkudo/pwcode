@@ -1,4 +1,4 @@
-import { mistralModel } from "@/lib/ai/models";
+import { geminiModel } from "@/lib/ai/models";
 import { systemPromptForGuide, userPromptForGuide } from "@/lib/prompts/guide";
 import { guideSchema } from "@/lib/schemas/guide-schema";
 import { streamObject } from "ai";
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const context = await req.json();
 
   const result = streamObject({
-    model: mistralModel,
+    model: geminiModel,
     schema: guideSchema,
     system: systemPromptForGuide,
     prompt: userPromptForGuide(context),

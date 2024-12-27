@@ -2,21 +2,21 @@ import { fileNames } from "@/contants/sandpack";
 import { CodeSelect } from "@/lib/types";
 import { createFiles } from "@/lib/utils";
 import {
-  SandpackCodeEditor,
   SandpackLayout,
   SandpackPreview,
   SandpackProvider,
-  SandpackStack,
 } from "@codesandbox/sandpack-react";
 import { ecoLight } from "@codesandbox/sandpack-themes";
+import { MonacoEditor } from "../monaco/MonacoEditor";
 
 type Props = {
-  children: React.ReactNode;
+  topChildren?: React.ReactNode;
+  bottomchildren?: React.ReactNode;
+  children?: React.ReactNode;
   code: Pick<CodeSelect, "html" | "css" | "javascript">;
-  reviewCode?: React.ReactNode;
 };
 
-const SPEditor = ({ children, code, reviewCode }: Props) => {
+const SPEditor = ({ topChildren, bottomchildren, code, children }: Props) => {
   const files = createFiles(code);
   return (
     <SandpackProvider
@@ -31,24 +31,13 @@ const SPEditor = ({ children, code, reviewCode }: Props) => {
         activeFile: fileNames.html,
       }}
     >
+      <div>{topChildren}</div>
+      <SandpackLayout>
+        <MonacoEditor />
+        <SandpackPreview style={{ height: "100vh" }} />
+      </SandpackLayout>
+      {bottomchildren}
       {children}
-      <SandpackStack>
-        <SandpackLayout>
-          <SandpackCodeEditor
-            showTabs={true}
-            style={{
-              height: "calc(100vh - 8rem)",
-            }}
-          />
-          <SandpackPreview
-            showOpenInCodeSandbox={false}
-            style={{
-              height: "calc(100vh - 8rem)",
-            }}
-          />
-        </SandpackLayout>
-      </SandpackStack>
-      {reviewCode}
     </SandpackProvider>
   );
 };

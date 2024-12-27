@@ -25,7 +25,7 @@ const page = async ({ params }: Props) => {
   const projectWithOriginalCode = await db
     .select()
     .from(projectTable)
-    .leftJoin(codeTable, eq(projectTable.codeId, codeTable.id))
+    .leftJoin(codeTable, eq(projectTable.originalCodeId, codeTable.id))
     .where(eq(projectTable.id, id));
   return (
     <div className="p-4">
@@ -36,12 +36,17 @@ const page = async ({ params }: Props) => {
         const isRecode = originalCode ? true : false;
         return (
           <div key={pro.id}>
-            <SPEditor code={code} reviewCode={<ReviewProjectCode />}>
-              {isRecode && (
-                <div className="float-right mb-2">
-                  <GenerateGuide originalCode={originalCode as CodeSelect} />
-                </div>
-              )}
+            <SPEditor
+              code={code}
+              topChildren={<ReviewProjectCode />}
+              bottomchildren={
+                isRecode && (
+                  <div className="float-right mb-2">
+                    <GenerateGuide originalCode={originalCode as CodeSelect} />
+                  </div>
+                )
+              }
+            >
               <SaveRemote codeId={code.id} />
             </SPEditor>
           </div>

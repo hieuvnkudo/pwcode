@@ -20,8 +20,8 @@ const SPPublicEditor = ({ localFileName, children }: Props) => {
   return (
     <div className="p-4 w-full">
       <SPEditor code={code}>
-        {children}
         <SaveLocal localFileName={localFileName} />
+        {children}
       </SPEditor>
     </div>
   );

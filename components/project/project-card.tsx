@@ -25,7 +25,7 @@ const ProjectCard = ({ project, code }: Props) => {
   return (
     <Card className="hover:shadow-md">
       <CardHeader>
-        <CardTitle className="text-2xl">{project.name}</CardTitle>
+        <CardTitle className="text-base">{project.name}</CardTitle>
         <CardDescription>
           {project.description}
           <br />

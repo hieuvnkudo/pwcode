@@ -1,16 +1,9 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { TableRow } from "@/components/ui/table";
 import { db } from "@/db/drizzle";
 import { studentTable } from "@/db/schema";
 import { formatTime } from "@/lib/utils";
 import { and, eq } from "drizzle-orm";
+import CustomTable, { CustomTableCell } from "../custom/custom-table";
 import DeleteStudent from "../student/delete-student";
 import VerifiedStudentButton from "../student/verified-student-button";
 import VerifiedStudentOnClass from "../student/verified-students-on-class";
@@ -26,6 +19,20 @@ const StudentVerified = async ({ classId }: Props) => {
     .where(
       and(eq(studentTable.classId, classId), eq(studentTable.verified, false))
     );
+  const tableHeadNames = [
+    {
+      name: "Tên",
+      show: true,
+    },
+    {
+      name: "Tham gia lúc",
+      show: true,
+    },
+    {
+      name: "Thao tác",
+      show: true,
+    },
+  ];
   return (
     <div>
       <h1 className="my-4 text-xl font-bold text-center">
@@ -37,34 +44,22 @@ const StudentVerified = async ({ classId }: Props) => {
           studentCount={students.length}
         />
       </div>
-      <Table className="mt-2">
-        <TableCaption>
-          Danh sách học sinh trong lớp (Số lượng: {students.length})
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Tên</TableHead>
-            <TableHead>Tham gia lúc</TableHead>
-            <TableHead>Thao tác</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {students.map((student) => {
-            return (
-              <TableRow key={student.id}>
-                <TableCell>{student.name}</TableCell>
-                <TableCell>{formatTime(student.createdAt)}</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <DeleteStudent studentId={student.id} />
-                    <VerifiedStudentButton studentId={student.id} />
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+      <CustomTable tableHeadNames={tableHeadNames} caption="Danh sách học sinh">
+        {students.map((student) => {
+          return (
+            <TableRow key={student.id}>
+              <CustomTableCell>{student.name}</CustomTableCell>
+              <CustomTableCell>{formatTime(student.createdAt)}</CustomTableCell>
+              <CustomTableCell>
+                <div className="flex items-center gap-2">
+                  <DeleteStudent studentId={student.id} />
+                  <VerifiedStudentButton studentId={student.id} />
+                </div>
+              </CustomTableCell>
+            </TableRow>
+          );
+        })}
+      </CustomTable>
     </div>
   );
 };

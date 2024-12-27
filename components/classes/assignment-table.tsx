@@ -1,18 +1,11 @@
 import { auth } from "@/auth";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { TableRow } from "@/components/ui/table";
 import { db } from "@/db/drizzle";
 import { assignmentTable, studentTable, submitTable } from "@/db/schema";
 import { formatName, formatTime, isDueDate } from "@/lib/utils";
 import { and, desc, eq } from "drizzle-orm";
 import Link from "next/link";
+import CustomTable, { CustomTableCell } from "../custom/custom-table";
 
 type Props = {
   classId: string;
@@ -35,37 +28,44 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
         )
       )
       .orderBy(desc(assignmentTable.updatedAt));
+    const tableHeadNames = [
+      {
+        name: "Tên bài tậptập",
+        show: true,
+      },
+      {
+        name: "Trạng thái",
+        show: true,
+      },
+      {
+        name: "Cập nhật lúc",
+        show: true,
+      },
+    ];
     return (
-      <Table>
-        <TableCaption>Số lượng bài tập: {ass.length}</TableCaption>
-        <TableHeader>
-          <TableRow className="font-bold">
-            <TableHead>Tên bài tập</TableHead>
-            <TableHead>Hạn nôp bài</TableHead>
-            <TableHead>Thời gian cập nhật gần nhất</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {ass.map((assignment, index) => {
-            const ass = assignment;
-            const isDue = isDueDate(ass.dueDate);
-            return (
-              <TableRow
-                key={index}
-                className={`${isDue ? "row-due" : "font-bold"}`}
-              >
-                <TableCell>
-                  <Link href={`/assign/${ass.id}`} className="hover:underline">
-                    {formatName(ass.name, 20)}
-                  </Link>
-                </TableCell>
-                <TableCell>{isDue ? "Hết hạn" : "Còn hạn"}</TableCell>
-                <TableCell>{formatTime(ass.updatedAt)}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+      <CustomTable
+        tableHeadNames={tableHeadNames}
+        caption="Danh sách bài tập đã tạo"
+      >
+        {ass.map((assignment, index) => {
+          const ass = assignment;
+          const isDue = isDueDate(ass.dueDate);
+          return (
+            <TableRow
+              key={index}
+              className={`${isDue ? "row-due" : "font-bold"}`}
+            >
+              <CustomTableCell>
+                <Link href={`/assign/${ass.id}`} className="hover:underline">
+                  {formatName(ass.name, 20)}
+                </Link>
+              </CustomTableCell>
+              <CustomTableCell>{isDue ? "Hết hạn" : "Còn hạn"}</CustomTableCell>
+              <CustomTableCell>{formatTime(ass.updatedAt)}</CustomTableCell>
+            </TableRow>
+          );
+        })}
+      </CustomTable>
     );
   }
   const student = await db
@@ -92,54 +92,54 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
       )
     )
     .orderBy(desc(assignmentTable.updatedAt));
+  const tableHeadNames = [
+    {
+      name: "Tên bài tập",
+      show: true,
+    },
+    {
+      name: "Mô tả",
+      show: true,
+    },
+    {
+      name: "Hạn nộp bàibài",
+      show: true,
+    },
+    {
+      name: "Ngày tạo",
+      show: true,
+    },
+    {
+      name: "Trạng tháithái",
+      show: true,
+    },
+  ];
   return (
-    <Table>
-      <TableCaption>
-        Danh sách bài tập. Số lượng: {assignments.length}
-      </TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Tên bài tập</TableHead>
-          <TableHead>Mô tả</TableHead>
-          <TableHead>Hạn nôp bài</TableHead>
-          <TableHead>Ngày tạo</TableHead>
-          <TableHead>Trạng thái</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {assignments.map((assignment, index) => {
-          const ass = assignment.assignment_table;
-          const submit = assignment.submit_table;
-          const isDue = isDueDate(ass.dueDate);
-          return (
-            <TableRow
-              key={index}
-              className={`${isDue ? "row-due" : "font-bold"}`}
-            >
-              <TableCell>
-                <Link href={`/assign/${ass.id}`} className="hover:underline">
-                  {formatName(ass.name, 20)}
-                </Link>
-              </TableCell>
-              <TableCell>{formatName(ass.description as string, 30)}</TableCell>
-              <TableCell>{isDue ? "Hết hạn" : "Còn hạn"}</TableCell>
-              <TableCell>{ass.createdAt.toLocaleString()}</TableCell>
-              <TableCell
-                className={
-                  submit
-                    ? "text-green-500"
-                    : isDue
-                    ? "text-red-400"
-                    : "text-yellow-400"
-                }
-              >
-                {submit ? "Đã nộp" : "Chưa nộp"}
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+    <CustomTable tableHeadNames={tableHeadNames} caption="Danh sách bài tập">
+      {assignments.map((assignment, index) => {
+        const ass = assignment.assignment_table;
+        const submit = assignment.submit_table;
+        const isDue = isDueDate(ass.dueDate);
+        return (
+          <TableRow
+            key={index}
+            className={`${isDue ? "row-due" : "font-bold"}`}
+          >
+            <CustomTableCell>
+              <Link href={`/assign/${ass.id}`} className="hover:underline">
+                {formatName(ass.name, 20)}
+              </Link>
+            </CustomTableCell>
+            <CustomTableCell>
+              {formatName(ass.description as string, 30)}
+            </CustomTableCell>
+            <CustomTableCell>{isDue ? "Hết hạn" : "Còn hạn"}</CustomTableCell>
+            <CustomTableCell>{ass.createdAt.toLocaleString()}</CustomTableCell>
+            <CustomTableCell>{submit ? "Đã nộp" : "Chưa nộp"}</CustomTableCell>
+          </TableRow>
+        );
+      })}
+    </CustomTable>
   );
 };
 

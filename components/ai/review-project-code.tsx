@@ -1,33 +1,43 @@
 "use client";
-import { useCompletion } from "ai/react";
-import Markdown from "react-markdown";
+import { useState } from "react";
 import { Button } from "../ui/button";
 
 import { fileNames } from "@/contants/sandpack";
-import { reviewCodePrompt } from "@/lib/prompts/review-code";
 import { useSandpack } from "@codesandbox/sandpack-react";
 
 const ReviewProjectCode = () => {
-  const { completion, complete } = useCompletion({
-    api: "/api/completion",
-  });
+  const [isLoading, setIsLoading] = useState(false);
   const { sandpack } = useSandpack();
-  const { files } = sandpack;
+  const { files, updateFile } = sandpack;
+  const update = (json: { html: string; css: string; javascript: string }) => {
+    updateFile(fileNames.html, json.html);
+    updateFile(fileNames.css, json.css);
+    updateFile(fileNames.javascript, json.javascript);
+  };
   const handleGenarate = async () => {
-    await complete(
-      reviewCodePrompt({
+    setIsLoading(true);
+
+    await fetch("/api/review", {
+      method: "POST",
+      body: JSON.stringify({
         html: files[fileNames.html].code,
         css: files[fileNames.css].code,
         javascript: files[fileNames.javascript].code,
+      }),
+    })
+      .then((response) => {
+        response.json().then((json) => {
+          setIsLoading(false);
+          update(json);
+        });
       })
-    );
+      .catch((error) => console.error(error));
   };
   return (
-    <div className="my-2">
-      <Button onClick={handleGenarate}>Review Code</Button>
-      <div className="my-2">
-        <Markdown>{completion}</Markdown>
-      </div>
+    <div className="my-2 flex gap-2">
+      <Button onClick={handleGenarate}>
+        {isLoading ? "Reviewing" : "Review"}
+      </Button>
     </div>
   );
 };

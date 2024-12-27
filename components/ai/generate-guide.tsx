@@ -1,15 +1,9 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { fileNames } from "@/contants/sandpack";
 import { guideSchema } from "@/lib/schemas/guide-schema";
 import { CodeSelect } from "@/lib/types";
+import { useSandpack } from "@codesandbox/sandpack-react";
 import { experimental_useObject as useObject } from "ai/react";
 import { Button } from "../ui/button";
 
@@ -18,10 +12,45 @@ type Props = {
 };
 
 export default function GenerateGuide({ originalCode }: Props) {
-  const { object, submit, isLoading, stop } = useObject({
+  const { submit, isLoading, stop } = useObject({
     api: "/api/guide",
     schema: guideSchema,
+    onFinish: ({ object }) => {
+      console.log(object);
+      localStorage.setItem(
+        "return-code",
+        JSON.stringify({
+          html: files[fileNames.html]?.code,
+          css: files[fileNames.css]?.code,
+          javascript: files[fileNames.javascript]?.code,
+        })
+      );
+      updateCode({
+        html: object?.html,
+        css: object?.css,
+        javascript: object?.javascript,
+      });
+    },
   });
+  const updateCode = (code: {
+    html?: string;
+    css?: string;
+    javascript?: string;
+  }) => {
+    updateFile(fileNames.html, code.html);
+    updateFile(fileNames.css, code.css);
+    updateFile(fileNames.javascript, code.javascript);
+  };
+  const returnCode = () => {
+    const isHave = localStorage.getItem("return-code");
+    if (isHave) {
+      const code = JSON.parse(isHave);
+      updateCode(code);
+      localStorage.removeItem("return-code");
+    }
+  };
+  const { sandpack } = useSandpack();
+  const { files, updateFile } = sandpack;
   const handleGenarate = async () => {
     submit({
       html: originalCode.html,
@@ -30,41 +59,18 @@ export default function GenerateGuide({ originalCode }: Props) {
     });
   };
   return (
-    <Dialog>
-      <Button asChild>
-        <DialogTrigger>Ai Guide</DialogTrigger>
+    <div className="flex gap-2">
+      <Button
+        onClick={() => {
+          returnCode();
+        }}
+      >
+        Return
       </Button>
-      <DialogContent className="h-[calc(100vh-8rem)] overflow-auto">
-        <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription></DialogDescription>
-          <div className="flex gap-2">
-            <Button
-              disabled={isLoading}
-              onClick={handleGenarate}
-              className="w-fit"
-            >
-              {isLoading ? "Generating..." : "Generate"}
-            </Button>
-            {isLoading && <Button onClick={() => stop()}>Stop</Button>}
-          </div>
-        </DialogHeader>
-        <div className="w-full text-sm">
-          <h1>{object?.title}</h1>
-          <h1>{object?.description}</h1>
-          {object?.guides?.map((guide, index) => {
-            return (
-              <div key={index} className="text-sm text-gray-500 p-2 my-2">
-                <p>{guide?.order}</p>
-                <p>{guide?.currentFile}</p>
-                <p>{guide?.requỉrement}</p>
-                <p>{guide?.description}</p>
-                <pre>{guide?.code}</pre>
-              </div>
-            );
-          })}
-        </div>
-      </DialogContent>
-    </Dialog>
+      <Button disabled={isLoading} onClick={handleGenarate} className="w-fit">
+        {isLoading ? "Generating..." : "Generate"}
+      </Button>
+      {isLoading && <Button onClick={() => stop()}>Stop</Button>}
+    </div>
   );
 }

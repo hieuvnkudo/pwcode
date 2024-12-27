@@ -1,17 +1,10 @@
 import { auth } from "@/auth";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { TableRow } from "@/components/ui/table";
 import { db } from "@/db/drizzle";
 import { classTable, studentTable } from "@/db/schema";
 import { formatName, formatTime } from "@/lib/utils";
 import { and, desc, eq } from "drizzle-orm";
+import CustomTable, { CustomTableCell } from "../custom/custom-table";
 import AssignButtonWithStudent from "../student/assign-button-with-student";
 
 type Props = {
@@ -34,39 +27,39 @@ const StudentTable = async ({ classId }: Props) => {
       and(eq(studentTable.classId, classId), eq(studentTable.verified, true))
     )
     .orderBy(desc(studentTable.createdAt));
+  const tableHeadNames = [
+    {
+      name: "Tên",
+      show: true,
+    },
+    {
+      name: "Tham gia lúc",
+      show: true,
+    },
+    {
+      name: "Bài tập đã làm",
+      show: isTeacher,
+    },
+  ];
   return (
-    <Table>
-      <TableCaption>
-        Danh sách học sinh. Số lượng: {students.length}
-      </TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="font-bold">Tên</TableHead>
-          <TableHead>Tham gia lúc</TableHead>
-          {isTeacher && <TableHead>Bài tập đã làm</TableHead>}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {students.map((student) => {
-          return (
-            <TableRow key={student.id}>
-              <TableCell className="font-bold">
-                {formatName(student.name, 20)}
-              </TableCell>
-              <TableCell>{formatTime(student.createdAt)}</TableCell>
-              {isTeacher && (
-                <TableCell>
-                  <AssignButtonWithStudent
-                    student={student}
-                    classroom={classroom[0]}
-                  />
-                </TableCell>
-              )}
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+    <CustomTable tableHeadNames={tableHeadNames} caption="Danh sách học sinh">
+      {students.map((student) => {
+        return (
+          <TableRow key={student.id}>
+            <CustomTableCell>{formatName(student.name, 20)}</CustomTableCell>
+            <CustomTableCell>{formatTime(student.createdAt)}</CustomTableCell>
+            {isTeacher && (
+              <CustomTableCell>
+                <AssignButtonWithStudent
+                  student={student}
+                  classroom={classroom[0]}
+                />
+              </CustomTableCell>
+            )}
+          </TableRow>
+        );
+      })}
+    </CustomTable>
   );
 };
 

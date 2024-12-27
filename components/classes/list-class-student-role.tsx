@@ -34,7 +34,7 @@ const ListClassRoleStudent = async () => {
         return (
           <Card key={classItem.id} className="hover:shadow-md">
             <CardHeader>
-              <CardTitle>{classItem.name}</CardTitle>
+              <CardTitle className="text-base">{classItem.name}</CardTitle>
               <CardDescription>{classItem.description}</CardDescription>
             </CardHeader>
             <CardContent className="flex items-center">
@@ -43,7 +43,9 @@ const ListClassRoleStudent = async () => {
               </Button>
             </CardContent>
             <CardFooter>
-              <p>Cập nhật lúc: {classItem.updatedAt.toLocaleString()}</p>
+              <p className="text-gray-500 text-sm">
+                Cập nhật lúc: {classItem.updatedAt.toLocaleString()}
+              </p>
             </CardFooter>
           </Card>
         );

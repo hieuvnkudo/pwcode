@@ -29,7 +29,7 @@ const ListClass = async () => {
         return (
           <Card key={item.id} className="hover:shadow-md">
             <CardHeader>
-              <CardTitle>{item.name}</CardTitle>
+              <CardTitle className="text-base">{item.name}</CardTitle>
               <CardDescription>{item.description}</CardDescription>
             </CardHeader>
             <CardContent className="flex items-center gap-2">
@@ -40,7 +40,9 @@ const ListClass = async () => {
               <DeleteClass classroom={item} />
             </CardContent>
             <CardFooter>
-              <p>Cập nhật lúc: {item.updatedAt.toLocaleString()}</p>
+              <p className="text-sm text-gray-500">
+                Cập nhật lúc: {item.updatedAt.toLocaleString()}
+              </p>
             </CardFooter>
           </Card>
         );

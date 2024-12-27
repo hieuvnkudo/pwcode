@@ -1,14 +1,7 @@
 import { auth } from "@/auth";
+import CustomTable, { CustomTableCell } from "@/components/custom/custom-table";
 import { SelectClass } from "@/components/submit/select-class";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { TableRow } from "@/components/ui/table";
 import { db } from "@/db/drizzle";
 import {
   assignmentTable,
@@ -87,54 +80,57 @@ const page = async (props: Props) => {
       .where(eq(submitTable.studentId, student[0].id as string))
       .orderBy(desc(submitTable.updatedAt));
   }
+  const tableHeads = [
+    {
+      name: "Bài tập",
+      show: true,
+    },
+    {
+      name: "Đã chấm",
+
+      show: true,
+    },
+    {
+      name: "Phản hồi",
+      show: true,
+    },
+    {
+      name: "Điểm",
+      show: true,
+    },
+  ];
   return (
     <div className="p-4 w-full">
       <SelectClass classes={classes.map((c) => c.class_table)} />
       <div>
         {submits.length > 0 ? (
-          <Table className="w-full overflow-auto">
-            <TableCaption>
-              Danh sách các bài nộp của học sinh{" "}
-              {student[0]?.name || `có email ${email}`}
-            </TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="font-bold">Tên bài tập</TableHead>
-                <TableHead>Đã chấm?</TableHead>
-                <TableHead>Phản hồi</TableHead>
-                <TableHead>Điểm</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {submits.map((submit) => {
-                const submit_table = submit.submit_table;
-                const assignment_table = submit.assignment_table;
-                return (
-                  <TableRow key={submit.submit_table.id}>
-                    <TableCell className="font-bold">
-                      <Link
-                        href={`/assign/${assignment_table.id}`}
-                        className="hover:underline"
-                      >
-                        {formatName(assignment_table.name, 20)}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      {submit_table.rated ? "Đã chấm" : "Chưa"}
-                    </TableCell>
-                    <TableCell>
-                      {submit_table.feedback || "Chưa có phản hồi"}
-                    </TableCell>
-                    <TableCell>{submit_table.point}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+          <CustomTable tableHeadNames={tableHeads} caption="Danh sách bài nộp">
+            {submits.map((submit) => {
+              const submit_table = submit.submit_table;
+              const assignment_table = submit.assignment_table;
+              return (
+                <TableRow key={submit.submit_table.id}>
+                  <CustomTableCell>
+                    <Link
+                      href={`/assign/${assignment_table.id}`}
+                      className="hover:underline"
+                    >
+                      {formatName(assignment_table.name, 20)}
+                    </Link>
+                  </CustomTableCell>
+                  <CustomTableCell>
+                    {submit_table.rated ? "Đã chấm" : "Chưa"}
+                  </CustomTableCell>
+                  <CustomTableCell>
+                    {submit_table.feedback || "Chưa có phản hồi"}
+                  </CustomTableCell>
+                  <CustomTableCell>{submit_table.point}</CustomTableCell>
+                </TableRow>
+              );
+            })}
+          </CustomTable>
         ) : (
-          <div className="py-4 text-center">
-            Bạn chưa nộp bài tập nào trong lớp này
-          </div>
+          <div>Không có dữ liệu</div>
         )}
       </div>
     </div>
