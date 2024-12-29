@@ -1,6 +1,10 @@
 import { mistralModel } from "@/lib/ai/models";
 import { streamText } from "ai";
 
+export const maxDuration = 30;
+
+export const runtime = "edge";
+
 export async function POST(req: Request) {
   const { messages, data } = await req.json();
   const initialMessages = messages.slice(0, -1);
