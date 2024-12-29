@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import { recodeProjectAction } from "@/lib/action/project";
-import { CodeSelect, ProjectSelect } from "@/lib/types";
+import { CodeErrorToMessage, CodeSelect, ProjectSelect } from "@/lib/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
@@ -28,7 +28,7 @@ const ReCodeButton = ({ code, project, isRecode }: Props) => {
     if (error) {
       toast({
         title: "Lỗi",
-        description: error,
+        description: CodeErrorToMessage[error] || "Đã có lỗi xảy ra",
       });
     } else if (data) {
       toast({
@@ -52,17 +52,16 @@ const ReCodeButton = ({ code, project, isRecode }: Props) => {
       {isRecode ? (
         <Dialog>
           <Button asChild>
-            <DialogTrigger>Recode</DialogTrigger>
+            <DialogTrigger>Viết lại</DialogTrigger>
           </Button>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Mô tả dự án nhanh?</DialogTitle>
+              <DialogTitle>Viết lại dự án</DialogTitle>
               <DialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                Mô tả dự án: {project.description}
               </DialogDescription>
             </DialogHeader>
-            <Button onClick={handleRecode}>Xác nhận recode</Button>
+            <Button onClick={handleRecode}>Xác nhận viết lại</Button>
           </DialogContent>
         </Dialog>
       ) : (

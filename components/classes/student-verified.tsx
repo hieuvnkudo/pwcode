@@ -4,6 +4,7 @@ import { studentTable } from "@/db/schema";
 import { formatTime } from "@/lib/utils";
 import { and, eq } from "drizzle-orm";
 import CustomTable, { CustomTableCell } from "../custom/custom-table";
+import RefreshButton from "../shared/refresh-button";
 import DeleteStudent from "../student/delete-student";
 import VerifiedStudentButton from "../student/verified-student-button";
 import VerifiedStudentOnClass from "../student/verified-students-on-class";
@@ -39,10 +40,13 @@ const StudentVerified = async ({ classId }: Props) => {
         DANH SÁCH HỌC SINH CHỜ DUYỆT
       </h1>
       <div className="flex items-center justify-end">
-        <VerifiedStudentOnClass
-          classId={classId}
-          studentCount={students.length}
-        />
+        <div className="flex gap-2">
+          <VerifiedStudentOnClass
+            classId={classId}
+            studentCount={students.length}
+          />
+          <RefreshButton />
+        </div>
       </div>
       <CustomTable tableHeadNames={tableHeadNames} caption="Danh sách học sinh">
         {students.map((student) => {

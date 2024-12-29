@@ -61,7 +61,7 @@ const AssignButtonWithStudent = ({ classroom, student }: Props) => {
   return (
     <Dialog>
       <Button asChild>
-        <DialogTrigger>Xem</DialogTrigger>
+        <DialogTrigger>Xem bài làm</DialogTrigger>
       </Button>
       <DialogContent className="h-[calc(100vh-8rem)]">
         <DialogHeader>

@@ -1,3 +1,4 @@
+import { noReview, reviewedCode } from "@/contants/example-code";
 import { fileNames } from "@/contants/sandpack";
 
 export const systemReviewCodePrompt = `
@@ -13,20 +14,32 @@ Ví dụ:
 - Trong file CSS: /* Comment */
 - Trong file JavaScript: // Comment
 
+Ví dụ về cách đánh giá: 
+
+Mã nguồn khi chưa đánh giá:
+${fileNames.html}:${noReview.html}
+${fileNames.css}:${noReview.css}
+${fileNames.javascript}:${noReview.javascript}
+
+Mã nguồn sau khi đánh giá:
+${fileNames.html}:${reviewedCode.html}
+${fileNames.css}:${reviewedCode.css}
+${fileNames.javascript}:${reviewedCode.javascript}
+
 Ngôn ngữ dùng để viết comment: Tiếng Việt.
 
 Luôn thêm comment vào đầu file để mô tả nội dung file.
-Luôn thêm thời gian đánh giá vào cuối file.
 `.trim();
 
 export const userReviewCodePrompt = (code: {
   html: string;
   css: string;
   javascript: string;
-}) =>
-  `
-Đánh giá mã nguồn bằng cách comment vào từng file, nội dung các file cần đánh giá như sau:
-${fileNames.html}: ${code.html}
-${fileNames.css}: ${code.css}
-${fileNames.javascript}: ${code.javascript}
-`.trim();
+}) => {
+  return `
+  Đánh giá mã nguồn bằng cách comment vào từng file, nội dung các file cần đánh giá như sau:
+  ${fileNames.html}: ${code.html}
+  ${fileNames.css}: ${code.css}
+  ${fileNames.javascript}: ${code.javascript}
+  `.trim();
+};

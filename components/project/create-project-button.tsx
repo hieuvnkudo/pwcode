@@ -27,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Switch } from "../ui/switch";
 import { Textarea } from "../ui/textarea";
+import { ToastAction } from "../ui/toast";
 
 const formSchema = z.object({
   name: z
@@ -53,7 +54,7 @@ const CreateProjectButton = () => {
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { error } = await createProjectAction({
+    const { error, data } = await createProjectAction({
       name: values.name,
       description: values.description,
       shared: values.shared,
@@ -65,10 +66,18 @@ const CreateProjectButton = () => {
         title: "Lỗi",
         description: error,
       });
-    } else {
+    } else if (data) {
       toast({
         title: "Thành công",
         description: "Dự án đã được tạo",
+        action: (
+          <ToastAction
+            altText="Go project"
+            onClick={() => router.push(`/projects/${data[0].id}`)}
+          >
+            Đến dự án
+          </ToastAction>
+        ),
       });
       form.reset();
       setOpen(false);

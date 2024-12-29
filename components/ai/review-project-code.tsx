@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 
 import { fileNames } from "@/contants/sandpack";
+import { toast } from "@/hooks/use-toast";
 import { useSandpack } from "@codesandbox/sandpack-react";
 
 const ReviewProjectCode = () => {
@@ -28,6 +29,10 @@ const ReviewProjectCode = () => {
       .then((response) => {
         response.json().then((json) => {
           setIsLoading(false);
+          toast({
+            title: "Đã viết đánh giá",
+            description: "Đánh giá viết dưới dang comment trong file code",
+          });
           update(json);
         });
       })
@@ -36,7 +41,7 @@ const ReviewProjectCode = () => {
   return (
     <div className="my-2 flex gap-2">
       <Button onClick={handleGenarate}>
-        {isLoading ? "Reviewing" : "Review"}
+        {isLoading ? "Đang nhận xét..." : "Nhận xét"}
       </Button>
     </div>
   );

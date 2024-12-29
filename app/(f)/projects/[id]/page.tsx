@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import GenerateGuide from "@/components/ai/generate-guide";
 import ReviewProjectCode from "@/components/ai/review-project-code";
+import OriginalProject from "@/components/project/original-project";
 import SaveRemote from "@/components/sandpack/save-remote";
 import SPEditor from "@/components/sandpack/sp-editor";
 import { db } from "@/db/drizzle";
@@ -35,20 +35,13 @@ const page = async ({ params }: Props) => {
         const originalCode = projectWithOriginalCode[0]?.code_table;
         const isRecode = originalCode ? true : false;
         return (
-          <div key={pro.id}>
-            <SPEditor
-              code={code}
-              topChildren={<ReviewProjectCode />}
-              bottomchildren={
-                isRecode && (
-                  <div className="float-right mb-2">
-                    <GenerateGuide originalCode={originalCode as CodeSelect} />
-                  </div>
-                )
-              }
-            >
+          <div key={pro.id} className="flex- flex-col items-start">
+            <SPEditor code={code} topChildren={<ReviewProjectCode />}>
               <SaveRemote codeId={code.id} />
             </SPEditor>
+            {isRecode && (
+              <OriginalProject originalCode={originalCode as CodeSelect} />
+            )}
           </div>
         );
       })}

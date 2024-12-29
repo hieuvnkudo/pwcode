@@ -12,13 +12,13 @@ type Props = {
 };
 
 export default function GenerateGuide({ originalCode }: Props) {
-  const { submit, isLoading, stop } = useObject({
+  const { submit } = useObject({
     api: "/api/guide",
     schema: guideSchema,
     onFinish: ({ object }) => {
       console.log(object);
       localStorage.setItem(
-        "return-code",
+        originalCode.id,
         JSON.stringify({
           html: files[fileNames.html]?.code,
           css: files[fileNames.css]?.code,
@@ -42,11 +42,11 @@ export default function GenerateGuide({ originalCode }: Props) {
     updateFile(fileNames.javascript, code.javascript);
   };
   const returnCode = () => {
-    const isHave = localStorage.getItem("return-code");
+    const isHave = localStorage.getItem(originalCode.id);
     if (isHave) {
       const code = JSON.parse(isHave);
       updateCode(code);
-      localStorage.removeItem("return-code");
+      localStorage.removeItem(originalCode.id);
     }
   };
   const { sandpack } = useSandpack();
@@ -59,18 +59,9 @@ export default function GenerateGuide({ originalCode }: Props) {
     });
   };
   return (
-    <div className="flex gap-2">
-      <Button
-        onClick={() => {
-          returnCode();
-        }}
-      >
-        Return
-      </Button>
-      <Button disabled={isLoading} onClick={handleGenarate} className="w-fit">
-        {isLoading ? "Generating..." : "Generate"}
-      </Button>
-      {isLoading && <Button onClick={() => stop()}>Stop</Button>}
+    <div className="flex items-center gap-2">
+      <Button onClick={returnCode}>Trở lại</Button>
+      <Button onClick={handleGenarate}>Chạy</Button>
     </div>
   );
 }

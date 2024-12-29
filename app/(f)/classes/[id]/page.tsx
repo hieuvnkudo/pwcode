@@ -72,17 +72,21 @@ const page = async ({ params }: Props) => {
               </Suspense>
             </TabsContent>
 
-            <TabsContent value="create-assign" className="w-full">
-              <Suspense fallback={<div>Loading...</div>}>
-                <CreateAssign classId={classroom.id} />
-              </Suspense>
-            </TabsContent>
+            {isTeacher && (
+              <>
+                <TabsContent value="create-assign" className="w-full">
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <CreateAssign classId={classroom.id} />
+                  </Suspense>
+                </TabsContent>
 
-            <TabsContent value="verify-student" className="w-full">
-              <Suspense fallback={<div>Loading...</div>}>
-                <StudentVerified classId={id} />
-              </Suspense>
-            </TabsContent>
+                <TabsContent value="verify-student" className="w-full">
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <StudentVerified classId={id} />
+                  </Suspense>
+                </TabsContent>
+              </>
+            )}
           </CustomTabs>
         );
       })}

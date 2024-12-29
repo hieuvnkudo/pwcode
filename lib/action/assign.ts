@@ -103,3 +103,12 @@ export const getAssignsFromStudentIdAction = customActionHandler(
       .where(eq(submitTable.studentId, studentId));
   }
 );
+
+export const deleteAssignAction = customActionHandler(
+  async (id: AssignmentSelect["id"]) => {
+    return await db
+      .delete(assignmentTable)
+      .where(eq(assignmentTable, id))
+      .returning();
+  }
+);

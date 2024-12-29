@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!-- Khai báo loại tài liệu là HTML5 -->
+<html>
+  <!-- Thẻ mở đầu của tài liệu HTML -->
+  <head>
+    <!-- Thẻ chứa các thông tin meta và liên kết đến các tài nguyên -->
+    <title>Hello Project</title>
+    <!-- Tiêu đề của trang web -->
+    <meta charset="UTF-8" />
+    <!-- Đặt mã hóa ký tự là UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Đặt viewport để trang web hiển thị tốt trên các thiết bị di động -->
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Liên kết đến file CSS -->
+  </head>
+  <!-- Đóng thẻ head -->
+
+  <body>
+    <!-- Thẻ chứa nội dung chính của trang web -->
+    <div class="login-page">
+      <!-- Thẻ div chứa toàn bộ trang đăng nhập -->
+      <div class="form">
+        <!-- Thẻ div chứa các form đăng nhập và đăng ký -->
+        <form class="register-form">
+          <!-- Form đăng ký -->
+          <input type="text" placeholder="name" />
+          <!-- Ô nhập tên -->
+          <input type="password" placeholder="password" />
+          <!-- Ô nhập mật khẩu -->
+          <input type="text" placeholder="email address" />
+          <!-- Ô nhập địa chỉ email -->
+          <button>create</button>
+          <!-- Nút tạo tài khoản -->
+          <p class="message">Already registered? <a href="#">Sign In</a></p>
+          <!-- Thông báo và liên kết đến trang đăng nhập -->
+        </form>
+        <!-- Đóng form đăng ký -->
+        <form class="login-form">
+          <!-- Form đăng nhập -->
+          <input type="text" placeholder="username" />
+          <!-- Ô nhập tên đăng nhập -->
+          <input type="password" placeholder="password" />
+          <!-- Ô nhập mật khẩu -->
+          <button>login</button>
+          <!-- Nút đăng nhập -->
+          <p class="message">
+            Not registered? <a href="#">Create an account</a>
+            <!-- Thông báo và liên kết đến trang đăng ký -->
+          </p>
+        </form>
+        <!-- Đóng form đăng nhập -->
+      </div>
+      <!-- Đóng thẻ div chứa các form -->
+    </div>
+    <!-- Đóng thẻ div chứa toàn bộ trang đăng nhập -->
+    <script src="/index.js"></script>
+    <!-- Liên kết đến file JavaScript -->
+  </body>
+  <!-- Đóng thẻ body -->
+</html>
+<!-- Đóng thẻ html -->
+
+<!--
+Đây là file HTML chính của project. Nội dung của file gồm các thẻ HTML cơ bản để tạo ra một trang web đăng nhập và đăng ký.
+Thẻ <head> chứa các meta tags và link đến file CSS.
+Thẻ <body> chứa các thẻ HTML để tạo ra một form đăng nhập và đăng ký.
+Cuối cùng là thẻ <script> để gọi file JavaScript.
+-->
+
+<!-- Đề xuất cải thiện:
+1. Thêm thuộc tính 'type' cho các nút button để tránh hành vi mặc định của nút submit.
+2. Thêm thuộc tính 'required' cho các ô input để đảm bảo người dùng nhập dữ liệu.
+3. Sử dụng thẻ <label> để cải thiện khả năng truy cập và liên kết với các ô input.
+4. Thay đổi placeholder của ô nhập email từ 'text' thành 'email' để hỗ trợ kiểm tra định dạng email.
+-->

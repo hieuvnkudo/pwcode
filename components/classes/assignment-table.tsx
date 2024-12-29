@@ -5,6 +5,7 @@ import { assignmentTable, studentTable, submitTable } from "@/db/schema";
 import { formatName, formatTime, isDueDate } from "@/lib/utils";
 import { and, desc, eq } from "drizzle-orm";
 import Link from "next/link";
+import DeleteAssign from "../assign/deleta-assign";
 import CustomTable, { CustomTableCell } from "../custom/custom-table";
 
 type Props = {
@@ -30,7 +31,7 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
       .orderBy(desc(assignmentTable.updatedAt));
     const tableHeadNames = [
       {
-        name: "Tên bài tậptập",
+        name: "Tên bài tập",
         show: true,
       },
       {
@@ -39,6 +40,10 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
       },
       {
         name: "Cập nhật lúc",
+        show: true,
+      },
+      {
+        name: "Thao tác",
         show: true,
       },
     ];
@@ -62,6 +67,9 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
               </CustomTableCell>
               <CustomTableCell>{isDue ? "Hết hạn" : "Còn hạn"}</CustomTableCell>
               <CustomTableCell>{formatTime(ass.updatedAt)}</CustomTableCell>
+              <CustomTableCell>
+                <DeleteAssign assign={ass} />
+              </CustomTableCell>
             </TableRow>
           );
         })}
@@ -102,7 +110,7 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
       show: true,
     },
     {
-      name: "Hạn nộp bàibài",
+      name: "Hạn nộp bài",
       show: true,
     },
     {
@@ -110,7 +118,7 @@ const AssignmentTable = async ({ classId, teacherEmail }: Props) => {
       show: true,
     },
     {
-      name: "Trạng tháithái",
+      name: "Trạng thái",
       show: true,
     },
   ];
