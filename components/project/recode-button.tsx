@@ -10,21 +10,24 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { recodeProjectAction } from "@/lib/action/project";
 import { CodeErrorToMessage, CodeSelect, ProjectSelect } from "@/lib/types";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { ToastAction } from "../ui/toast";
 
 type Props = {
   code: CodeSelect;
   project: ProjectSelect;
-  isRecode: boolean;
 };
 
-const ReCodeButton = ({ code, project, isRecode }: Props) => {
+const ReCodeButton = ({ code, project }: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const handleRecode = async () => {
-    const { error, data } = await recodeProjectAction(code);
+    setIsLoading(true);
+    const { error, data } = await recodeProjectAction(code, project);
+    setIsLoading(false);
     if (error) {
       toast({
         title: "Lỗi",
@@ -43,32 +46,29 @@ const ReCodeButton = ({ code, project, isRecode }: Props) => {
           </ToastAction>
         ),
       });
+      setOpen(false);
     } else {
       console.log("error");
     }
   };
   return (
     <>
-      {isRecode ? (
-        <Dialog>
-          <Button asChild>
-            <DialogTrigger>Viết lại</DialogTrigger>
-          </Button>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Viết lại dự án</DialogTitle>
-              <DialogDescription>
-                Mô tả dự án: {project.description}
-              </DialogDescription>
-            </DialogHeader>
-            <Button onClick={handleRecode}>Xác nhận viết lại</Button>
-          </DialogContent>
-        </Dialog>
-      ) : (
-        <Button asChild variant={"outline"}>
-          <Link href={`/projects/${project.id}`}>Viết mã</Link>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <Button asChild>
+          <DialogTrigger>Viết lại</DialogTrigger>
         </Button>
-      )}
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Viết lại dự án</DialogTitle>
+            <DialogDescription>
+              Mô tả dự án: {project.description}
+            </DialogDescription>
+          </DialogHeader>
+          <Button disabled={isLoading} onClick={handleRecode}>
+            Xác nhận viết lại
+          </Button>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

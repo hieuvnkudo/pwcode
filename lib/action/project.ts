@@ -50,7 +50,7 @@ export const updateProjectAction = customActionHandler(
 );
 
 export const recodeProjectAction = customActionHandler(
-  async (code: CodeSelect) => {
+  async (code: CodeSelect, project: ProjectSelect) => {
     const session = await auth();
     if (!session) throw new CustomError("Bạn chưa đăng nhập");
     const email = session.user?.email as string;
@@ -72,8 +72,8 @@ export const recodeProjectAction = customActionHandler(
       .insert(projectTable)
       .values([
         {
-          name: "Recode project from " + code.userEmail,
-          description: `Dự án có code tham khảo từ người dùng có email ${code.userEmail}`,
+          name: `Dự án viết lại vào lúc ${new Date().toLocaleString()}`,
+          description: `Dự án có code tham khảo từ dự án của người dùng có email ${code.userEmail}`,
           shared: false,
           sharedContent: "",
           userEmail: email,

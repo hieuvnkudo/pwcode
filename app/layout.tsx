@@ -5,6 +5,7 @@ import TopBar from "@/components/shared/top-bar";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Geist, Geist_Mono } from "next/font/google";
 import RoleProvider from "../context/tab-context";
 import "./globals.css";
@@ -39,14 +40,16 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen`}
       >
         <Toaster />
-        <LeftBar />
-        <main className="flex flex-col flex-grow">
-          <TopBar />
-          <section className="flex flex-col flex-grow overflow-auto bg-zinc-200">
-            <RoleProvider>{children}</RoleProvider>
-          </section>
-          <BottomBar />
-        </main>
+        <SessionProvider>
+          <LeftBar />
+          <main className="flex flex-col flex-grow">
+            <TopBar />
+            <section className="flex flex-col flex-grow overflow-auto bg-zinc-200">
+              <RoleProvider>{children}</RoleProvider>
+            </section>
+            <BottomBar />
+          </main>
+        </SessionProvider>
         <Analytics />
       </body>
     </html>

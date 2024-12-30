@@ -1,31 +1,35 @@
-import { auth } from "@/auth";
+"use client";
+import useMobile from "@/hooks/use-mobile";
+import { LogInIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 import CustomAvatar from "../custom/custom-avatar";
 import BackButton from "./back-button";
 import GoogleButton from "./google-button";
 import LogoutButton from "./logout-button";
 import TitlePath from "./title-path";
 
-const TopBar = async () => {
-  const session = await auth();
+const TopBar = () => {
+  const session = useSession();
+  const isMobile = useMobile();
   return (
     <header className="flex items-center justify-between h-16 px-4 py-2">
       <BackButton />
       <TitlePath />
-      {session ? (
+      {session.data ? (
         <>
-          <div className="hidden md:block">
+          <div className="flex gap-2">
             <CustomAvatar
-              name={session.user?.name as string}
-              src={session.user?.image as string}
+              name={session.data.user?.name as string}
+              src={session.data.user?.image as string}
               type="name-left"
             />
-          </div>
-          <div className="md:hidden">
-            <LogoutButton />
+            {isMobile && <LogoutButton />}
           </div>
         </>
       ) : (
-        <GoogleButton />
+        <GoogleButton>
+          {isMobile ? <LogInIcon /> : "Đăng nhập với Google"}
+        </GoogleButton>
       )}
     </header>
   );

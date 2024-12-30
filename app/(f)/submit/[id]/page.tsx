@@ -71,7 +71,7 @@ const page = async ({ params }: Props) => {
   return (
     <div className="p-4">
       <h6>{student.name}</h6>
-      <CustomTabs tabs={tabs} keyName="submit-id">
+      <CustomTabs tabs={tabs} keyName={`submit-${id}`}>
         <TabsContent value="code-submit" className="w-full">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="w-full md:w-1/2">

@@ -82,6 +82,10 @@ const page = async (props: Props) => {
   }
   const tableHeads = [
     {
+      name: "Thời gian nộp",
+      show: true,
+    },
+    {
       name: "Bài tập",
       show: true,
     },
@@ -110,6 +114,9 @@ const page = async (props: Props) => {
               const assignment_table = submit.assignment_table;
               return (
                 <TableRow key={submit.submit_table.id}>
+                  <CustomTableCell>
+                    {submit_table.updatedAt.toLocaleString()}
+                  </CustomTableCell>
                   <CustomTableCell>
                     <Link
                       href={`/assign/${assignment_table.id}`}

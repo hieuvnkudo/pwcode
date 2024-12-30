@@ -15,24 +15,24 @@ const StudentTable = async ({ classId }: Props) => {
   const session = await auth();
   if (!session) return <h1>Bạn chưa đăng nhập</h1>;
   const email = session.user?.email as string;
-  const student = await db
-    .select()
-    .from(studentTable)
-    .where(
-      and(
-        eq(studentTable.userEmail, email),
-        eq(studentTable.classId, classId),
-        eq(studentTable.verified, true)
-      )
-    );
-  if (student.length === 0)
-    return <h1>Bạn không phải là học sinh của lớp này</h1>;
   const classroom = await db
     .select()
     .from(classTable)
     .where(eq(classTable.id, classId));
   if (classroom.length === 0) return <h1>Lớp học không tồn tại</h1>;
   const isTeacher = classroom[0].teacherEmail === email;
+  const student = await db
+    .select()
+    .from(studentTable)
+    .where(
+      and(
+        !isTeacher ? eq(studentTable.userEmail, email) : undefined,
+        eq(studentTable.classId, classId),
+        eq(studentTable.verified, true)
+      )
+    );
+  if (student.length === 0)
+    return <h1>Bạn không phải là học sinh của lớp này</h1>;
   const students = await db
     .select()
     .from(studentTable)

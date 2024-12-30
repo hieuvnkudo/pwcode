@@ -1,4 +1,4 @@
-import { signOut } from "@/auth";
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,6 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { LogOutIcon } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 const LogoutButton = () => {
   return (
@@ -22,7 +23,7 @@ const LogoutButton = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Đăng xuấtxuất?</AlertDialogTitle>
+          <AlertDialogTitle>Đăng xuất?</AlertDialogTitle>
           <AlertDialogDescription>
             Bạn sẽ phải đăng nhập lại để tiếp tục
           </AlertDialogDescription>
@@ -31,7 +32,6 @@ const LogoutButton = () => {
           <AlertDialogCancel>Hủy</AlertDialogCancel>
           <AlertDialogAction
             onClick={async () => {
-              "use server";
               await signOut();
             }}
           >

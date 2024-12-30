@@ -10,9 +10,14 @@ import {
 import { db } from "@/db/drizzle";
 import { codeTable, projectTable } from "@/db/schema";
 import { SandpackLayout, SandpackPreview } from "@codesandbox/sandpack-react";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, isNotNull } from "drizzle-orm";
+import { alias } from "drizzle-orm/pg-core";
+import Link from "next/link";
 import SPCommon from "../sandpack/sp-common";
+import { Button } from "../ui/button";
 import ReCodeButton from "./recode-button";
+
+const originalCodeTable = alias(codeTable, "original_code_table");
 
 const HomeListProject = async () => {
   const publicProjects = await db
@@ -23,11 +28,31 @@ const HomeListProject = async () => {
     .orderBy(desc(projectTable.updatedAt));
   const session = await auth();
   const email = session?.user?.email as string;
+  let userProjects = null;
+  if (email) {
+    userProjects = await db
+      .select()
+      .from(projectTable)
+      .innerJoin(
+        originalCodeTable,
+        and(
+          eq(originalCodeTable.id, projectTable.originalCodeId),
+          isNotNull(projectTable.originalCodeId)
+        )
+      )
+      .where(eq(projectTable.userEmail, email));
+  }
+  const originalCodeProject = userProjects?.map(
+    (project) => project.original_code_table
+  );
   return (
     <div className="grid grid-cols-1 gap-4 mt-2 md:grid-cols-2">
       {publicProjects.map((project) => {
         const code = project.code_table;
         const pro = project.project_table;
+        const isRecoded =
+          session && originalCodeProject?.find((o) => o.id === code.id);
+        const isMyCode = session && code.userEmail === email;
         return (
           <Card key={pro.id}>
             <CardHeader>
@@ -42,12 +67,18 @@ const HomeListProject = async () => {
               </SPCommon>
             </CardContent>
             <CardFooter>
-              {session && (
-                <ReCodeButton
-                  code={code}
-                  project={pro}
-                  isRecode={pro.userEmail !== email}
-                />
+              {isRecoded && (
+                <Button asChild>
+                  <Link href={`/projects/${isRecoded.id}`}>Đã viết lại</Link>
+                </Button>
+              )}
+              {isMyCode && (
+                <Button asChild>
+                  <Link href={`/projects/${pro.id}`}>Chỉnh sửa</Link>
+                </Button>
+              )}
+              {!isRecoded && !isMyCode && (
+                <ReCodeButton code={code} project={pro} />
               )}
             </CardFooter>
           </Card>
