@@ -9,7 +9,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: profile.id,
           name: profile.name,
           email: profile.email,
-          // email: "learnshullkudo@gmail.com",
           image: profile.picture,
         };
       },

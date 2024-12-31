@@ -41,7 +41,7 @@ function extractTextFromHTML(html: string) {
 
 const formSchema = z.object({
   dueDate: z.date({
-    required_error: "A date and time is required.",
+    required_error: "Bắt buộc phải có ngày hết hạn",
   }),
   name: z
     .string()

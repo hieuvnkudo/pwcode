@@ -50,7 +50,7 @@ export const updateProjectAction = customActionHandler(
 );
 
 export const recodeProjectAction = customActionHandler(
-  async (code: CodeSelect, project: ProjectSelect) => {
+  async (code: CodeSelect) => {
     const session = await auth();
     if (!session) throw new CustomError("Bạn chưa đăng nhập");
     const email = session.user?.email as string;

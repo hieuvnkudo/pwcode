@@ -22,7 +22,12 @@ type Props = {
 
 const page = async (props: Props) => {
   const session = await auth();
-  if (!session) return <h1>Bạn chưa đăng nhập</h1>;
+  if (!session)
+    return (
+      <div className="flex justify-center items-center h-96">
+        <h1>Bạn chưa đăng nhập</h1>
+      </div>
+    );
   const email = session.user?.email as string;
   const classes = await db
     .select()
@@ -137,7 +142,9 @@ const page = async (props: Props) => {
             })}
           </CustomTable>
         ) : (
-          <div>Không có dữ liệu</div>
+          <div className="flex justify-center items-center">
+            <h1>Không có dữ liệu</h1>
+          </div>
         )}
       </div>
     </div>

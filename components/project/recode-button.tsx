@@ -26,7 +26,7 @@ const ReCodeButton = ({ code, project }: Props) => {
   const router = useRouter();
   const handleRecode = async () => {
     setIsLoading(true);
-    const { error, data } = await recodeProjectAction(code, project);
+    const { error, data } = await recodeProjectAction(code);
     setIsLoading(false);
     if (error) {
       toast({

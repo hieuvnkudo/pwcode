@@ -67,18 +67,24 @@ const HomeListProject = async () => {
               </SPCommon>
             </CardContent>
             <CardFooter>
-              {isRecoded && (
-                <Button asChild>
-                  <Link href={`/projects/${isRecoded.id}`}>Đã viết lại</Link>
-                </Button>
-              )}
-              {isMyCode && (
-                <Button asChild>
-                  <Link href={`/projects/${pro.id}`}>Chỉnh sửa</Link>
-                </Button>
-              )}
-              {!isRecoded && !isMyCode && (
-                <ReCodeButton code={code} project={pro} />
+              {session && (
+                <>
+                  {isRecoded && (
+                    <Button asChild>
+                      <Link href={`/projects/${isRecoded.id}`}>
+                        Đã viết lại
+                      </Link>
+                    </Button>
+                  )}
+                  {isMyCode && (
+                    <Button asChild>
+                      <Link href={`/projects/${pro.id}`}>Chỉnh sửa</Link>
+                    </Button>
+                  )}
+                  {!isRecoded && !isMyCode && (
+                    <ReCodeButton code={code} project={pro} />
+                  )}
+                </>
               )}
             </CardFooter>
           </Card>

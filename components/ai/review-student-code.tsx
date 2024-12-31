@@ -16,7 +16,8 @@ type Props = {
 
 const ReviewStudentCode = ({ studentCode, originalCode }: Props) => {
   const chatRef = useRef<HTMLDivElement>(null);
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, setInput, handleInputChange, handleSubmit } =
+    useChat();
   const data = `Đây là dự án bạn cần đọc, trả lời yêu cầu người dùng:
   Mã nguồn của học sinh: 
   ${fileNames.html}: ${studentCode.html};
@@ -24,9 +25,11 @@ const ReviewStudentCode = ({ studentCode, originalCode }: Props) => {
   ${fileNames.javascript}: ${studentCode.javascript}
   
   Mã nguồn của giáo viên:
-  ${fileNames.html}: ${originalCode.html};
-  ${fileNames.css}: ${originalCode.css};
-  ${fileNames.javascript}: ${originalCode.javascript}`;
+  ${fileNames.html}: ${originalCode?.html || "Không có code giáo viên"};
+  ${fileNames.css}: ${originalCode?.css || "Không có code giáo viên"};
+  ${fileNames.javascript}: ${
+    originalCode?.javascript || "Không có code giáo viên"
+  }`;
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -80,7 +83,10 @@ const ReviewStudentCode = ({ studentCode, originalCode }: Props) => {
           <ArrowUp />
         </Button>
       </form>
-      <span onClick={() => {}} className="hover:underline cursor-pointer">
+      <span
+        onClick={() => setInput("So sánh code")}
+        className="hover:underline cursor-pointer"
+      >
         So sánh 2 đoạn code
       </span>
     </div>

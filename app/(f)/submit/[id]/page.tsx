@@ -51,6 +51,7 @@ const page = async ({ params }: Props) => {
     .where(
       eq(codeTable.id, submits[0].assignment_table.originalCodeId as string)
     );
+  console.log(originalCode);
   const tabs = [
     {
       value: "code-submit",

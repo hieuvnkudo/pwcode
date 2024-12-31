@@ -79,9 +79,9 @@ const page = async ({ params }: Props) => {
         const isTeacher = classes.teacherEmail === email;
         const isDue = isDueDate(ass.dueDate);
         return (
-          <CustomTabs tabs={tabs} key={ass.id} keyName={"assign-id"}>
+          <CustomTabs tabs={tabs} key={ass.id} keyName={`assign-${id}`}>
             <TabsContent value="info" className="w-full">
-              {isTeacher && isDue === false ? (
+              {isTeacher ? (
                 <>
                   <EditAssign assign={ass} />
                 </>

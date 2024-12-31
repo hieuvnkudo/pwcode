@@ -56,7 +56,7 @@ const page = async ({ params }: Props) => {
       </div>
       {classrooms?.map((classroom) => {
         return (
-          <CustomTabs key={classroom.id} tabs={tabs} keyName="classes-id">
+          <CustomTabs key={classroom.id} tabs={tabs} keyName={`class-${id}`}>
             <TabsContent value="assign" className="w-full">
               <Suspense fallback={<div>Loading...</div>}>
                 <AssignmentTable
