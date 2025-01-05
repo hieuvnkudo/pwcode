@@ -58,6 +58,7 @@ export const checkClassCodeAction = customActionHandler(
 );
 
 type Data = Array<{
+  id: string;
   sheetName: string;
   submits: Array<{
     ["Tên học sinh"]: string;
@@ -83,10 +84,11 @@ export const exportForClassAction = customActionHandler(
       )
       .innerJoin(studentTable, eq(submitTable.studentId, studentTable.id));
     const data = submits.reduce((acc: Data, submit) => {
+      const id = submit.assignment_table.id;
       const sheetName = submit.assignment_table.name;
       const index = acc.findIndex((item) => item.sheetName === sheetName);
       if (index === -1) {
-        acc.push({ sheetName, submits: [] });
+        acc.push({ id, sheetName, submits: [] });
       }
       const i = acc.findIndex((item) => item.sheetName === sheetName);
       acc[i].submits.push({
