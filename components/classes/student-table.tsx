@@ -46,6 +46,10 @@ const StudentTable = async ({ classId }: Props) => {
       show: true,
     },
     {
+      name: "Email",
+      show: true,
+    },
+    {
       name: "Tham gia lúc",
       show: true,
     },
@@ -60,6 +64,7 @@ const StudentTable = async ({ classId }: Props) => {
         return (
           <TableRow key={student.id}>
             <CustomTableCell>{formatName(student.name, 20)}</CustomTableCell>
+            <CustomTableCell>{student.userEmail}</CustomTableCell>
             <CustomTableCell>{formatTime(student.createdAt)}</CustomTableCell>
             {isTeacher && (
               <CustomTableCell>

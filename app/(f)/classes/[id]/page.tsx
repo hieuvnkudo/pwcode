@@ -4,6 +4,7 @@ import AssignmentTable from "@/components/classes/assignment-table";
 import StudentTable from "@/components/classes/student-table";
 import StudentVerified from "@/components/classes/student-verified";
 import CustomTabs from "@/components/custom/custom-tabs";
+import ExportForClass from "@/components/excel/export-for-class";
 import CopyButton from "@/components/shared/copy-button";
 import { TabsContent } from "@/components/ui/tabs";
 import { db } from "@/db/drizzle";
@@ -53,6 +54,11 @@ const page = async ({ params }: Props) => {
           <p>Mã lớp: {classrooms[0].classCode}</p>
           <CopyButton text={classrooms[0].classCode as string} />
         </div>
+        {isTeacher && (
+          <div>
+            <ExportForClass classroom={classrooms[0]} />
+          </div>
+        )}
       </div>
       {classrooms?.map((classroom) => {
         return (

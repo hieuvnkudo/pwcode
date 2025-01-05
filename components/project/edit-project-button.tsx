@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { updateProjectAction } from "@/lib/action/project";
-import { ProjectSelect } from "@/lib/types";
+import { CodeErrorToMessage, ProjectSelect } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -68,7 +68,7 @@ const EditProjectButton = ({ project }: Props) => {
     if (error) {
       toast({
         title: "Lỗi",
-        description: error,
+        description: CodeErrorToMessage[error],
       });
     } else {
       toast({

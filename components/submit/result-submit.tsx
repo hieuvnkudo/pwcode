@@ -105,7 +105,7 @@ const ResultSubmit = ({ submit, student }: Props) => {
             name="feedback"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Điểm</FormLabel>
+                <FormLabel>Đánh giá</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Good!!!!" {...field} />
                 </FormControl>
