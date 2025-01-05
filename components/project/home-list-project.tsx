@@ -42,9 +42,12 @@ const HomeListProject = async () => {
       )
       .where(eq(projectTable.userEmail, email));
   }
-  const originalCodeProject = userProjects?.map(
-    (project) => project.original_code_table
-  );
+  const originalCodeProject = userProjects?.map((p) => {
+    return {
+      id: p.original_code_table.id,
+      projectId: p.project_table.id,
+    };
+  });
   return (
     <div className="grid grid-cols-1 gap-4 mt-2 md:grid-cols-2">
       {publicProjects.map((project) => {
@@ -71,7 +74,7 @@ const HomeListProject = async () => {
                 <>
                   {isRecoded && (
                     <Button asChild>
-                      <Link href={`/projects/${isRecoded.id}`}>
+                      <Link href={`/projects/${isRecoded.projectId}`}>
                         Đã viết lại
                       </Link>
                     </Button>

@@ -36,7 +36,7 @@ const ReCodeButton = ({ code, project }: Props) => {
     } else if (data) {
       toast({
         title: "Thành công",
-        description: "Recode thành công",
+        description: "Đã tạo dự án viết lại",
         action: (
           <ToastAction
             onClick={() => router.push(`/projects/${data[0].id}`)}
@@ -47,6 +47,7 @@ const ReCodeButton = ({ code, project }: Props) => {
         ),
       });
       setOpen(false);
+      router.refresh();
     } else {
       console.log("error");
     }
