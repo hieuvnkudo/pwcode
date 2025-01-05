@@ -1,4 +1,5 @@
 "use client";
+import SPProject from "@/components/sandpack/sp-project";
 import { fileNames } from "@/contants/sandpack";
 import { CodeSelect } from "@/lib/types";
 import { useChat } from "ai/react";
@@ -6,8 +7,6 @@ import { ArrowUp } from "lucide-react";
 import { useEffect, useRef } from "react";
 import Markdown from "react-markdown";
 import CustomTabs from "../custom/custom-tabs";
-import SaveRemote from "../sandpack/save-remote";
-import SPEditor from "../sandpack/sp-editor";
 import { Button } from "../ui/button";
 import { TabsContent } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
@@ -21,6 +20,10 @@ type Props = {
 
 const ProjectDetail = ({ id, isRecode, code, originalCode }: Props) => {
   const chatRef = useRef<HTMLDivElement>(null);
+  const data = `Đây là dự án bạn cần đọc, trả lời yêu cầu người dùng
+  ${fileNames.html}: ${originalCode?.html}
+  ${fileNames.css}: ${originalCode?.css}
+  ${fileNames.javascript}: ${originalCode?.javascript}`;
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -57,16 +60,10 @@ const ProjectDetail = ({ id, isRecode, code, originalCode }: Props) => {
       show: isRecode,
     },
   ];
-  const data = `Đây là dự án bạn cần đọc, trả lời yêu cầu người dùng
-    ${fileNames.html}: ${originalCode?.html}
-    ${fileNames.css}: ${originalCode?.css}
-    ${fileNames.javascript}: ${originalCode?.javascript}`;
   return (
     <CustomTabs tabs={tabs} keyName={id}>
       <TabsContent value="my-project" className="w-full">
-        <SPEditor code={code}>
-          <SaveRemote codeId={code.id} />
-        </SPEditor>
+        <SPProject code={code} type="my-code" />
       </TabsContent>
       {isRecode && (
         <>
@@ -110,7 +107,7 @@ const ProjectDetail = ({ id, isRecode, code, originalCode }: Props) => {
               Mọi thay đổi trong code gốc sẽ không được lưu, chỉ có tab Code
               hiện tại mới được lưu
             </h1>
-            <SPEditor code={originalCode as CodeSelect}></SPEditor>
+            <SPProject code={originalCode as CodeSelect} type="original" />
           </TabsContent>
         </>
       )}
