@@ -36,7 +36,7 @@ const readCodeFromDirName = async (dirName: string) => {
   }
 };
 
-const seedCodeFromFile = async (dirName: string, email: string) => {
+export const seedCodeFromFile = async (dirName: string, email: string) => {
   const data = (await readCodeFromDirName(dirName)) as string[];
   if (!data) console.log("Không có dữ liệu");
   return await db

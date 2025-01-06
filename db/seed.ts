@@ -1,21 +1,42 @@
 import { souceCodeDefault } from "@/contants/sandpack";
 import { eq } from "drizzle-orm";
 import { reset } from "drizzle-seed";
-import { ClassSelect } from "../lib/types";
+import { ClassSelect, CodeSelect } from "../lib/types";
 import { db } from "./drizzle";
 import * as schema from "./schema";
+import { seedCodeFromFile } from "./seed-pro";
 
 const hieuEmail = "hieuvnkudo040303@gmail.com";
 const learnEmail = "learnshullkudo@gmail.com";
 
+const projects = [
+  "basic-form",
+  "css-preloader",
+  "flat-form",
+  "magic-card",
+  "signin-form",
+  "slider",
+];
+
 const seedCode = async (email: string) => {
+  const randomIndex = Math.floor(Math.random() * 10);
+  let code: CodeSelect[] = [
+    {
+      html: souceCodeDefault.html,
+      css: souceCodeDefault.css,
+      javascript: souceCodeDefault.javascript,
+    },
+  ] as CodeSelect[];
+  if (randomIndex < projects.length) {
+    code = await seedCodeFromFile(projects[randomIndex], email);
+  }
   return db
     .insert(schema.codeTable)
     .values({
       userEmail: email,
-      html: souceCodeDefault.html,
-      css: souceCodeDefault.css,
-      javascript: souceCodeDefault.javascript,
+      html: code[0].html,
+      css: code[0].css,
+      javascript: code[0].javascript,
     })
     .returning();
 };
@@ -28,7 +49,7 @@ const seedProject = async () => {
         {
           userEmail: hieuEmail,
           codeId: code[0].id,
-          name: `Dự ăn ${index} tạo bởi người dùng email ${hieuEmail}`,
+          name: `Dự án ${index} tạo bởi người dùng email ${hieuEmail}`,
           description: `Description of project ${index} created by ${hieuEmail}`,
         },
       ]);
