@@ -13,7 +13,11 @@ type Props = {
 const SPProject = ({ code, type }: Props) => {
   const [codeTemp, setCodeTemp] = useState(code);
   useEffect(() => {
-    setCodeTemp(JSON.parse(localStorage.getItem(`my-code-${code.id}`) || "{}"));
+    if (localStorage.getItem(`my-code-${code.id}`)) {
+      setCodeTemp(
+        JSON.parse(localStorage.getItem(`my-code-${code.id}`) as string)
+      );
+    }
   }, [code.id]);
   return (
     <SPEditor code={codeTemp}>

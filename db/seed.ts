@@ -147,7 +147,7 @@ const seedClasses = async () => {
   }
 };
 
-const seedSubmit = async (classId: ClassSelect["id"]) => {
+export const seedSubmit = async (classId: ClassSelect["id"]) => {
   const students = await db
     .select()
     .from(schema.studentTable)
