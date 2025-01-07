@@ -202,11 +202,9 @@ const seedClasses = async () => {
   );
 };
 
-const main = async () => {
+export const main = async () => {
   await reset(db, schema);
   await seedProject();
   await seedClasses();
   console.log("Seed data success");
 };
-
-main();
