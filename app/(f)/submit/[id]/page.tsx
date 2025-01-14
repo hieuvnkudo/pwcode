@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import ReviewStudentCode from "@/components/ai/review-student-code";
 import CustomTabs from "@/components/custom/custom-tabs";
+import { MonacoEditor } from "@/components/monaco/MonacoEditor";
 import SPCommon from "@/components/sandpack/sp-common";
 import ResultSubmit from "@/components/submit/result-submit";
 import { TabsContent } from "@/components/ui/tabs";
@@ -13,11 +14,7 @@ import {
   submitTable,
 } from "@/db/schema";
 import { CodeSelect } from "@/lib/types";
-import {
-  SandpackCodeEditor,
-  SandpackLayout,
-  SandpackPreview,
-} from "@codesandbox/sandpack-react";
+import { SandpackLayout, SandpackPreview } from "@codesandbox/sandpack-react";
 import { and, eq } from "drizzle-orm";
 
 type Props = {
@@ -80,13 +77,7 @@ const page = async ({ params }: Props) => {
               {studentCode && (
                 <SPCommon code={studentCode}>
                   <SandpackLayout>
-                    <SandpackCodeEditor
-                      showTabs
-                      readOnly={true}
-                      style={{
-                        height: "calc(100vh - 8rem)",
-                      }}
-                    />
+                    <MonacoEditor />
                   </SandpackLayout>
                 </SPCommon>
               )}
@@ -103,13 +94,7 @@ const page = async ({ params }: Props) => {
                   }
                 >
                   <SandpackLayout>
-                    <SandpackCodeEditor
-                      showTabs
-                      readOnly={true}
-                      style={{
-                        height: "calc(100vh - 8rem)",
-                      }}
-                    />
+                    <MonacoEditor />
                   </SandpackLayout>
                 </SPCommon>
               ) : (
