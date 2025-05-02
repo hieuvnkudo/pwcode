@@ -144,6 +144,25 @@ Here are some screenshots demonstrating the PWCode interface:
 
 The project structure is organized according to modern Next.js project model, with clear separation between UI (components) and logic (lib), ensuring modularity and maintainability. The project uses Next.js App Router and organizes features into separate modules.
 
+## 🔄 System Integration Diagram
+
+### Connection Description
+
+- **Database (Neon.tech)**:
+  - Stores user data, projects, classes, and assignments
+  - Connects through Drizzle ORM to manage and query data
+  - Supports source code storage and edit history
+
+- **Mistral AI**:
+  - Provides AI services for code analysis and evaluation
+  - Supports code comparison between versions
+  - Creates intelligent chatbots to explain source code
+
+- **Google Auth**:
+  - Authenticates users through OAuth 2.0
+  - Manages login sessions and access permissions
+  - Secures user information
+
 ## 🏗️ Building the Runtime Environment
 
 To run the project, rename the `.env.example` file to `.env.local`.
