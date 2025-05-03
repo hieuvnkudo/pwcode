@@ -1,10 +1,16 @@
 # 🚀 PWCode
 
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## 📝 Introduction
 
 PWCode is an online code learning and development platform, focusing on HTML, CSS, and JavaScript. This platform provides an intuitive coding environment along with features for programming education and classroom management.
 
-[PWCode Platform](https://pwcode.vercel.app/)
+🔗 **[Live Demo](https://pwcode.vercel.app/)**
 
 ## 🖼️ Interface Demo
 
@@ -72,7 +78,7 @@ Here are some screenshots demonstrating the PWCode interface:
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: <span style="color: #61DAFB">Next.js</span>, <span style="color: #00D8FF">React 19</span>, <span style="color: #38B2AC">TailwindCSS</span>
+- **Frontend**: <span style="color: #61DAFB">Next.js</span>, <span style="color: #00D8FF">React 18</span>, <span style="color: #38B2AC">TailwindCSS</span>
 - **Backend**: <span style="color: #000000">Next.js API Routes</span>
 - **Database**: <span style="color: #336791">SQL</span> with <strong style="color: #FF4785">Drizzle ORM</strong>
 - **Authentication**: <span style="color: #4285F4">NextAuth/Auth.js</span> with Google Auth
@@ -144,7 +150,7 @@ Here are some screenshots demonstrating the PWCode interface:
 
 The project structure is organized according to modern Next.js project model, with clear separation between UI (components) and logic (lib), ensuring modularity and maintainability. The project uses Next.js App Router and organizes features into separate modules.
 
-## 🔄 System Integration Diagram
+## 🔄 System Integration
 
 ### Connection Description
 
@@ -163,7 +169,23 @@ The project structure is organized according to modern Next.js project model, wi
   - Manages login sessions and access permissions
   - Secures user information
 
-## 🏗️ Building the Runtime Environment
+## 📋 Getting Started
+
+### 🔄 Clone the Repository
+
+#### Using SSH (Recommended)
+```bash
+git clone git@github.com:hieuvnkudo/pwcode.git
+cd pwcode
+```
+
+#### Using HTTPS
+```bash
+git clone https://github.com/hieuvnkudo/pwcode.git
+cd pwcode
+```
+
+### 🏗️ Building the Runtime Environment
 
 To run the project, rename the `.env.example` file to `.env.local`.
 
@@ -196,9 +218,31 @@ pnpm run dev
 pnpm run seed
 ```
 
+5. Build Project
+
+```bash
+pnpm run build
+```
+
+## 🔮 Roadmap
+
+- 📱 Responsive design for mobile devices
+- 🏠 Dashboard for teachers to track student progress
+- 🔄 Real-time collaboration features
+- 🧪 Enhanced testing capabilities
+- 🌐 Support for additional programming languages
+
 ## 👥 Contribution
 
-We always welcome contributions from the community. Please create issues or pull requests to contribute to the project.
+We welcome contributions from the community! Here's how you can contribute:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add some amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
+
+Please make sure to update tests as appropriate and follow the code style guidelines.
 
 ## 📄 License
 
