@@ -8,13 +8,36 @@
 
 ## 📝 Introduction
 
-PWCode is an online code learning and development platform, focusing on HTML, CSS, and JavaScript. This platform provides an intuitive coding environment along with features for programming education and classroom management.
+PWCode is a modern educational coding platform that provides an interactive environment for learning and teaching HTML, CSS, and JavaScript. Designed for both students and educators, it features classroom management, assignment workflows, and AI-powered code analysis.
 
 🔗 **[Live Demo](https://pwcode.vercel.app/)**
 
+## ✨ Key Features
+
+### 💻 Development Environment
+- Interactive code editor with real-time preview for HTML, CSS, and JavaScript
+- Project management system with versioning and sharing capabilities
+- Monaco Editor and Sandpack integration for professional development experience
+
+### 🏫 Educational Tools
+- Comprehensive classroom management for teachers and students
+- Assignment creation, distribution, and grading workflow
+- Progress tracking and performance analytics
+
+### 🤖 AI-Powered Features
+- Intelligent code analysis and comparison using Mistral AI
+- Automated feedback on student submissions
+- Code explanation and tutoring through AI chat interface
+
+### 🔐 Security & Integration
+- Robust authentication with NextAuth/Auth.js and Google OAuth
+- Role-based access control for administrators, teachers, and students
+- Secure data storage with SQL and Drizzle ORM
+
 ## 🖼️ Interface Demo
 
-Here are some screenshots demonstrating the PWCode interface:
+<details>
+<summary>View Screenshots</summary>
 
 ### Homepage and Code Editor
 ![Homepage](screenshots/homepage.jpeg)
@@ -55,194 +78,82 @@ Here are some screenshots demonstrating the PWCode interface:
 
 ![AI Chat with Code](screenshots/user-use-gen-ai-chat-with-code.jpeg)
 *Using GenAI to chat about code*
+</details>
 
-## ✨ Features
+## 🛠️ Technology Stack
 
-### 💻 Development Environment
-- 🖥️ Edit and run HTML, CSS, JavaScript code directly in the browser
-- 👁️ View code results instantly with preview mode
-- 💾 Save and manage code projects
+- **Frontend**: Next.js, React 18, TailwindCSS, Shadcn UI
+- **Backend**: Next.js API Routes, Server Actions
+- **Database**: SQL with Drizzle ORM
+- **Authentication**: NextAuth/Auth.js with Google OAuth
+- **Code Editing**: Monaco Editor, Sandpack
+- **Content**: TipTap Editor for rich text
+- **AI**: Mistral AI with Vercel AI SDK
 
-### 🌐 Social and Community Features
-- 🔄 Share source code with other users
-- 🔍 Explore other users' projects to learn
-
-### 🏫 Classroom Management
-- 📚 Create and manage classes
-- 📝 Assign coding tasks to students, allowing them to work in the development environment
-- ✅ Review and grade assignments
-
-### 🤖 AI Technology
-- 🧠 Support for code evaluation and comparison
-- 🔰 Understand existing code with Gen AI
-
-## 🛠️ Technologies Used
-
-- **Frontend**: <span style="color: #61DAFB">Next.js</span>, <span style="color: #00D8FF">React 18</span>, <span style="color: #38B2AC">TailwindCSS</span>
-- **Backend**: <span style="color: #000000">Next.js API Routes</span>
-- **Database**: <span style="color: #336791">SQL</span> with <strong style="color: #FF4785">Drizzle ORM</strong>
-- **Authentication**: <span style="color: #4285F4">NextAuth/Auth.js</span> with Google Auth
-- **Code Editing**: <span style="color: #1976D2">Monaco Editor</span>, <span style="color: #F9A825">Sandpack</span>
-- **Rich Text**: <span style="color: #5E35B1">TipTap Editor</span>
-- **AI Integration**: <span style="color: #7F39FB">Mistral AI</span> with <strong>Vercel AI SDK</strong>
-
-## 📂 Project Structure
+## 📂 Project Architecture
 
 ```
-📁 app/                       # Next.js App Router
-   ├── 📄 layout.tsx          # Main page layout
-   ├── 📄 page.tsx            # Home page
-   ├── 📁 (f)/                # Main feature pages
-   │   ├── 📁 assign/         # Assignment management
-   │   ├── 📁 classes/        # Class management
-   │   ├── 📁 projects/       # Project management
-   │   └── 📁 submit/         # Submit assignments
-   └── 📁 api/                # API Routes
-       ├── 📁 auth/           # Authentication APIs
-       ├── 📁 chat/           # Chat APIs
-       ├── 📁 completion/     # Code completion APIs
-       ├── 📁 guide/          # Guide APIs
-       └── 📁 review/         # Code review APIs
-
-📁 components/                # React Components
-   ├── 📁 ai/                 # AI-related components
-   ├── 📁 assign/             # Assignment management components
-   ├── 📁 classes/            # Class management components
-   ├── 📁 custom/             # Custom components
-   ├── 📁 excel/              # Excel data export components
-   ├── 📁 monaco/             # Monaco Editor
-   ├── 📁 project/            # Project management components
-   ├── 📁 sandpack/           # Code environment components
-   ├── 📁 shared/             # Shared components
-   ├── 📁 student/            # Student management components
-   ├── 📁 submit/             # Submission components
-   ├── 📁 tiptap/             # Rich text editor
-   └── 📁 ui/                 # Basic UI components
-
-📁 constants/                 # Constants and sample data
-   ├── 📄 example-code.ts     # Sample source code
-   ├── 📄 navigation.ts       # Navigation configuration
-   ├── 📄 sandpack.ts         # Sandpack configuration
-   └── 📁 example/            # Other examples
-
-📁 context/                   # React Context Providers
-   ├── 📄 path-context.tsx    # Path management
-   └── 📄 tab-context.tsx     # Tab management
-
-📁 db/                        # Database
-   ├── 📄 drizzle.ts          # Drizzle ORM configuration
-   ├── 📄 schema.ts           # Database schema
-   ├── 📄 seed.ts             # Sample data generation script
-   └── 📁 data/               # Static data
-
-📁 hooks/                     # Custom React Hooks
-   ├── 📄 use-mobile.ts       # Mobile device detection hook
-   └── 📄 use-toast.ts        # Notification display hook
-
-📁 lib/                       # Utility library
-   ├── 📄 types.ts            # Type definitions
-   ├── 📄 utils.ts            # Utility functions
-   ├── 📁 action/             # Server Actions
-   ├── 📁 ai/                 # AI integration
-   ├── 📁 prompts/            # Prompt templates
-   └── 📁 schemas/            # Validation schemas
+📁 app/                  # Next.js App Router with feature modules
+📁 components/           # React components organized by feature
+📁 context/              # React Context Providers
+📁 db/                   # Database configuration and schema
+📁 lib/                  # Utility functions, types, and business logic
+📁 constants/            # Application constants and defaults
+📁 hooks/                # Custom React hooks
 ```
 
-The project structure is organized according to modern Next.js project model, with clear separation between UI (components) and logic (lib), ensuring modularity and maintainability. The project uses Next.js App Router and organizes features into separate modules.
+## 🚀 Getting Started
 
-## 🔄 System Integration
+### Prerequisites
+- Node.js 18+ and pnpm
+- SQL database (compatible with Neon.tech)
+- API keys for authentication and AI services
 
-### Connection Description
+### Installation
 
-- **Database (Neon.tech)**:
-  - Stores user data, projects, classes, and assignments
-  - Connects through Drizzle ORM to manage and query data
-  - Supports source code storage and edit history
-
-- **Mistral AI**:
-  - Provides AI services for code analysis and evaluation
-  - Supports code comparison between versions
-  - Creates intelligent chatbots to explain source code
-
-- **Google Auth**:
-  - Authenticates users through OAuth 2.0
-  - Manages login sessions and access permissions
-  - Secures user information
-
-## 📋 Getting Started
-
-### 🔄 Clone the Repository
-
-#### Using SSH (Recommended)
-```bash
-git clone git@github.com:hieuvnkudo/pwcode.git
-cd pwcode
-```
-
-#### Using HTTPS
+1. Clone the repository
 ```bash
 git clone https://github.com/hieuvnkudo/pwcode.git
 cd pwcode
 ```
 
-### 🏗️ Building the Runtime Environment
-
-To run the project, rename the `.env.example` file to `.env.local`.
-
-### 🔑 Provide Necessary API Keys
-
-- `AUTH_SECRET`: 🔐 Security key for authentication
-- `MISTRAL_API_KEY`: 🧠 Mistral AI API key
-- `AUTH_GOOGLE_ID` & `AUTH_GOOGLE_SECRET`: 🔑 Google authentication information
-- `DATABASE_URL`: 🗄️ Database connection URL
-
-### 📋 Installation Steps
-
-1. 📥 Install required libraries
+2. Install dependencies
 ```bash
 pnpm install
 ```
 
-2. 🗄️ Create database
+3. Configure environment variables
+```bash
+cp .env.example .env.local
+# Edit .env.local with your API keys and configuration
+```
+
+4. Set up the database
 ```bash
 pnpm run push
 ```
 
-3. 🚀 Run the project
-```bash
-pnpm run dev
-```
-
-4. 🧩 (Optional) Generate sample data
+5. (Optional) Generate sample data
 ```bash
 pnpm run seed
 ```
 
-5. Build Project
-
+6. Start the development server
 ```bash
-pnpm run build
+pnpm run dev
 ```
 
-## 🔮 Roadmap
+## 🔮 Future Development
 
-- 📱 Responsive design for mobile devices
-- 🏠 Dashboard for teachers to track student progress
-- 🔄 Real-time collaboration features
-- 🧪 Enhanced testing capabilities
-- 🌐 Support for additional programming languages
+- Responsive mobile interface
+- Enhanced analytics dashboard
+- Real-time collaboration features
+- Support for additional programming languages
+- Advanced assessment capabilities
 
-## 👥 Contribution
+## 👥 Contributing
 
-We welcome contributions from the community! Here's how you can contribute:
-
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Commit your changes** (`git commit -m 'Add some amazing feature'`)
-4. **Push to the branch** (`git push origin feature/amazing-feature`)
-5. **Open a Pull Request**
-
-Please make sure to update tests as appropriate and follow the code style guidelines.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
